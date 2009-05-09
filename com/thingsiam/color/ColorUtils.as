@@ -24,6 +24,8 @@ public class ColorUtils extends Object {
 	
 	public static function invert( col:uint ):int
 	{
+		return col ^ 0xFFFFFF;
+		/*
 		var r:uint = col >> 16;
 		var g:uint = col >> 8 & 0xFF;
 		var b:uint = col & 0xFF;
@@ -33,14 +35,18 @@ public class ColorUtils extends Object {
 		b = invertChannel(b);
 		
 		return r << 16 | g << 8 | b;
+		*/
 	}
 	
 	public static function invertChannel( channel:uint ):int
 	{
+		return channel ^ 0xFF;
+		/*
 		channel = Math.min( channel, 255 );
 		channel = Math.max( channel, 0 );
 		if( channel == 128 ) return channel;
 		return channel > 128 ? (127 - (channel-128)) : (128-channel)+127;
+		*/
 	}
 }
 
