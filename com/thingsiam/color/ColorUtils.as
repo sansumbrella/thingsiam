@@ -22,6 +22,26 @@ public class ColorUtils extends Object {
 		return rr << 16 | gg << 8 | bb;
 	}
 	
+	public static function invert( col:uint ):int
+	{
+		var r:uint = col >> 16;
+		var g:uint = col >> 8 & 0xFF;
+		var b:uint = col & 0xFF;
+		
+		r = invertChannel(r);
+		g = invertChannel(g);
+		b = invertChannel(b);
+		
+		return r << 16 | g << 8 | b;
+	}
+	
+	public static function invertChannel( channel:uint ):int
+	{
+		channel = Math.min( channel, 255 );
+		channel = Math.max( channel, 0 );
+		if( channel == 128 ) return channel;
+		return channel > 128 ? (127 - (channel-128)) : (128-channel)+127;
+	}
 }
 
 }
