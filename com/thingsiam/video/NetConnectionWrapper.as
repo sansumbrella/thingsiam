@@ -103,13 +103,13 @@ public class NetConnectionWrapper extends NetConnection {
 	
 	public function onFCSubscribe(info:Object):void
 	{
-		for( var item in info )
+		for( var item:Object in info )
 			trace("NetConnectionWrapper::onFCSubscribe()", item, ":", info[item]);
 	}
 	
 	public function onFCUnsubscribe(info:Object):void
 	{
-		for( var item in info )
+		for( var item:Object in info )
 			trace("NetConnectionWrapper::onFCSubscribe()", item, ":", info[item]);
 	}
 

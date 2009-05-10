@@ -1,4 +1,4 @@
-package {
+package examples {
 
 import flash.display.Sprite;
 import flash.display.Shape;
@@ -10,6 +10,8 @@ import com.thingsiam.layout.ScreenModel;
 import flash.events.Event;
 import flash.events.DataEvent;
 import flash.events.MouseEvent;
+
+[SWF(width=640, height=360, backgroundColor=0xFFFFFF, frameRate=30)]
 
 public class VideoPlayer extends Sprite {
 	

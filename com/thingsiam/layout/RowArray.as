@@ -84,7 +84,7 @@ public class RowArray extends Sprite {
 		return winner;
 	}
 	
-	public function push( _item:DisplayObject, _extraMargin:Number=0 )
+	public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
 	{
 		if( numChildren != 0 )
 		{
@@ -95,7 +95,7 @@ public class RowArray extends Sprite {
 		addChild( _item );
 	}
 	
-	public function insertAt( _item:DisplayObject, _level:int )
+	public function insertAt( _item:DisplayObject, _level:int ):void
 	{
 		
 		if( numChildren != 0 ){

@@ -1,10 +1,14 @@
-package {
+package examples {
 
 import flash.display.Sprite;
 import flash.display.Shape;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
 
 import com.thingsiam.color.ColorUtils;
 import com.thingsiam.layout.RowArray;
+
+[SWF(width=800, height=600, backgroundColor=0x000000, frameRate=30)]
 
 public class Colors extends Sprite {
 	
@@ -33,6 +37,9 @@ public class Colors extends Sprite {
 	
 	private function init():void
 	{
+		stage.align = StageAlign.TOP_LEFT;
+		stage.scaleMode = StageScaleMode.NO_SCALE;
+		
 		topRow = new RowArray(0);
 		bottomRow = new RowArray(0);
 		addChild(topRow);

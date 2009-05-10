@@ -65,7 +65,7 @@ public class ColumnArray extends Sprite {
 		return winner;
 	}
 	
-	public function push( _item:DisplayObject )
+	public function push( _item:DisplayObject ):void
 	{
 		if( numChildren != 0 )
 		{
@@ -76,7 +76,7 @@ public class ColumnArray extends Sprite {
 		addChild( _item );
 	}
 	
-	public function insertAt( _item:DisplayObject, _level:int )
+	public function insertAt( _item:DisplayObject, _level:int ):void
 	{
 		
 		if( numChildren != 0 ){
