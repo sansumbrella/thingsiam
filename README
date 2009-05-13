@@ -1,4 +1,4 @@
-All the code in this library was written by David Wicks, http://sansumbrella.com/. You are free to use it for personal or commercial projects. I've found it useful for both.
+This was pretty much written by David Wicks, http://sansumbrella.com/. Some of the ideas (particularly iteration) were taken from Advanced Actionscript 3 with Design Patterns. You are free to use it for personal or commercial projects. I've found it useful for both.
 
 Updates to this code library are ongoing. It is lightweight, and meant to be used in conjunction with other Flash libraries and frameworks depending on the project at hand. The classes in it exist to ease certain tasks that may be repetitive. I have written many other helper classes here and there, and am making an attempt to consolidate them by creating this library.
 
