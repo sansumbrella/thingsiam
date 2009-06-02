@@ -1,8 +1,10 @@
 package com.thingsiam.iterators {
 	
-	/*
+	/**
 	*	@author David Wicks
 	*	@since  08.05.2008
+	*	
+	*	Creates a set of shuffled indices for a collection and iterates through the indices.
 	*/
 	
 	import com.thingsiam.iterators.IIterator;

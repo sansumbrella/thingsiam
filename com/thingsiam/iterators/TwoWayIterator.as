@@ -32,7 +32,7 @@ package com.thingsiam.iterators {
 		public function setIndex( id:int ) : Boolean {
 			if( id < 0 || id >= collection.length ) return false;
 			index = id;
-			return true;
+			return collection[index];
 		}
 		
 	}
