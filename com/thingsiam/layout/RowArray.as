@@ -119,7 +119,19 @@ public class RowArray extends Sprite {
 	{	//passes each child as the parameter to a given function
 		for( var i:int=0; i != numChildren; i++ )
 		{
-			fn(getChildAt(1));
+			fn(getChildAt(i));
+		}
+	}
+	
+	public function eachIf( fn:Function, condition:Function ):void
+	{	//passes each child as the parameter to a given function if a condition is met
+		for( var i:int=0; i != numChildren; i++ )
+		{
+			var c = getChildAt(i);
+			if( condition(c) )
+			{
+				fn( c );
+			}
 		}
 	}
 }
