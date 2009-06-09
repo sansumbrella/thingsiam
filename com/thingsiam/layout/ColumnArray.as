@@ -96,6 +96,14 @@ public class ColumnArray extends Sprite {
 		
 	}
 	
+	public function each( fn:Function ):void
+	{	//passes each child as the parameter to a given function
+		for( var i:int=0; i != numChildren; i++ )
+		{
+			fn(getChildAt(1));
+		}
+	}
+	
 }
 
 }
