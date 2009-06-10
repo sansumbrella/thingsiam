@@ -84,11 +84,17 @@ public class RowArray extends Sprite {
 		return winner;
 	}
 	
+	public function get right():Number{
+		//since width might not reflect the actual right edge
+		var obj:DisplayObject = last;
+		return obj.x + obj.width;
+	}
+	
 	public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
 	{
 		if( numChildren != 0 )
 		{
-			_item.x = width + margin + _extraMargin;
+			_item.x = right + margin + _extraMargin;
 		} 
 		else _item.x = 0;
 		
@@ -112,7 +118,6 @@ public class RowArray extends Sprite {
 		} else {
 			push( _item );
 		}
-		
 	}
 	
 	public function each( fn:Function ):void

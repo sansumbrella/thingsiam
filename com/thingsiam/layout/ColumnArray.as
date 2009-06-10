@@ -69,11 +69,16 @@ public class ColumnArray extends Sprite {
 	{
 		if( numChildren != 0 )
 		{
-			_item.y = height + margin;
+			_item.y = bottom + margin;
 		} 
 		else _item.y = 0;
 		
 		addChild( _item );
+	}
+	
+	public function get bottom():Number{
+		var obj:DisplayObject = last;
+		return obj.y + obj.height;
 	}
 	
 	public function insertAt( _item:DisplayObject, _level:int ):void
