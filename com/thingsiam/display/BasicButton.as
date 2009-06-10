@@ -14,33 +14,19 @@ package com.thingsiam.display {
 
 	public class BasicButton extends Sprite {
 		
-		private var _hitObject:Sprite;
-		
 		public function BasicButton(){
-			_hitObject = this;
 			assignListeners();
 		}
 		
 		private function assignListeners():void
 		{
-			_hitObject.buttonMode = true;
-			_hitObject.mouseChildren = false;
-			_hitObject.addEventListener( MouseEvent.MOUSE_OVER, handleOverEvent, false, 0, true );
-			_hitObject.addEventListener( MouseEvent.MOUSE_OUT, handleOutEvent, false, 0, true );
-			_hitObject.addEventListener( MouseEvent.CLICK, handleClickEvent, false, 0, true );
-			_hitObject.addEventListener( MouseEvent.MOUSE_DOWN, handleDownEvent, false, 0, true );
-			_hitObject.addEventListener( MouseEvent.MOUSE_UP, handleUpEvent, false, 0, true );
-		}
-		
-		private function removeListeners():void
-		{
-			_hitObject.buttonMode = false;
-			_hitObject.mouseChildren = true;
-			_hitObject.removeEventListener( MouseEvent.MOUSE_OVER, handleOverEvent );
-			_hitObject.removeEventListener( MouseEvent.MOUSE_OUT, handleOutEvent );
-			_hitObject.removeEventListener( MouseEvent.CLICK, handleClickEvent );
-			_hitObject.removeEventListener( MouseEvent.MOUSE_DOWN, handleDownEvent );
-			_hitObject.removeEventListener( MouseEvent.MOUSE_UP, handleUpEvent );
+			buttonMode = true;
+			mouseChildren = false;
+			addEventListener( MouseEvent.MOUSE_OVER, handleOverEvent, false, 0, true );
+			addEventListener( MouseEvent.MOUSE_OUT, handleOutEvent, false, 0, true );
+			addEventListener( MouseEvent.CLICK, handleClickEvent, false, 0, true );
+			addEventListener( MouseEvent.MOUSE_DOWN, handleDownEvent, false, 0, true );
+			addEventListener( MouseEvent.MOUSE_UP, handleUpEvent, false, 0, true );
 		}
 		
 		private function handleOverEvent( e:Event ) : void {
@@ -95,12 +81,6 @@ package com.thingsiam.display {
 		public function disable():void
 		{
 			mouseEnabled = false;
-		}
-		
-		public function set hitObject(value:Sprite):void {
-			removeListeners();
-			_hitObject = value;
-			assignListeners();
 		}
 		
 	}
