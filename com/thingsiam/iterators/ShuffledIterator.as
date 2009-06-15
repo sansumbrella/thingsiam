@@ -9,12 +9,12 @@ package com.thingsiam.iterators {
 	
 	import com.thingsiam.iterators.IIterator;
 	
-	public class RandomIterator implements IIterator {
+	public class ShuffledIterator implements IIterator {
 		
 		private var indices:Array,
 					collection:Array;
 		
-		public function RandomIterator( _collection:Array )
+		public function ShuffledIterator( _collection:Array )
 		{
 			collection = _collection;
 			indices = new Array();
@@ -37,6 +37,7 @@ package com.thingsiam.iterators {
 		
 		public function reset() : void
 		{
+			indices = new Array();
 			for( var i:int=0; i != collection.length; i++ )
 			{
 				indices.push(i);
