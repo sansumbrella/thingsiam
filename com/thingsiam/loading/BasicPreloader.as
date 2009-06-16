@@ -19,6 +19,7 @@ package com.thingsiam.loading {
 		
 		public function BasicPreloader( view:IProgressIndicator=null )
 		{
+			_view = view;
 			if( view == null )
 			{
 				_view = new BasicPreloaderView;
