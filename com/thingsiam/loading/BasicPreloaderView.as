@@ -1,10 +1,17 @@
-package com.thingsiam.display {
+package com.thingsiam.loading {
 
 import flash.display.Sprite;
 import flash.display.Shape;
 
 public class BasicPreloaderView extends Sprite implements IProgressIndicator {
-
+	
+	/**
+	*	@author David Wicks	
+	*	A simple progress bar indicator.
+	*	The fill scales from left to right as the progress ratio increases.
+	*	
+	*/
+	
 	private var _loadFill:Shape;
 	private var _loadOutline:Shape;
 	
@@ -37,12 +44,13 @@ public class BasicPreloaderView extends Sprite implements IProgressIndicator {
 	
 	public function show():void
 	{
-		
+		visible = true;	//just in case
 	}
 	
-	public function hide(onComplete:Function):void
-	{
-		onComplete();
+	public function hide():void
+	{	//removes itself from the displaylist
+		if(parent)
+			parent.removeChild(this);
 	}
 	
 }

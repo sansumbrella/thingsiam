@@ -101,7 +101,7 @@ public class ColumnArray extends Sprite {
 		
 	}
 	
-	public function each( fn:Function ):void
+	public function forEach( fn:Function ):void
 	{	//passes each child as the parameter to a given function
 		for( var i:int=0; i != numChildren; i++ )
 		{
@@ -113,7 +113,7 @@ public class ColumnArray extends Sprite {
 	{	//passes each child as the parameter to a given function if a condition is met
 		for( var i:int=0; i != numChildren; i++ )
 		{
-			var c = getChildAt(i);
+			var c:DisplayObject = getChildAt(i);
 			if( condition(c) )
 			{
 				fn( c );

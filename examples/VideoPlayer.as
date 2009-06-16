@@ -15,11 +15,11 @@ import flash.events.MouseEvent;
 
 public class VideoPlayer extends Sprite {
 	
-	private var video:SimpleVideo;
-	private var screen:ScreenModel;
-	private var controlMC:BasicButton;
-	private var playheadMC:Shape;
-	private var loadIndicatorMC:Shape;
+	private var _video:SimpleVideo;
+	private var _screen:ScreenModel;
+	private var _controlMC:BasicButton;
+	private var _playheadMC:Shape;
+	private var _loadIndicatorMC:Shape;
 	
 	private var w:Number = 640, h:Number = 360;
 	
@@ -31,45 +31,45 @@ public class VideoPlayer extends Sprite {
 	
 	private function init():void
 	{
-		video = new SimpleVideo(w, h);
-		addChild(video);
-		video.connect();
-		video.play("http://thingsiam.com/projects/personal/animation/hands_small.flv");
+		_video = new SimpleVideo(w, h);
+		addChild(_video);
+		_video.connect();
+		_video.play("http://thingsiam.com/projects/personal/animation/hands_small.flv");
 		
-		video.addEventListener( SimpleVideo.PROGRESS_UPDATE, handleProgress, false, 0, true );
-		video.addEventListener( SimpleVideo.LOAD_UPDATE, handleLoading, false, 0, true );
-		video.addEventListener( SimpleVideo.END, handleComplete, false, 0, true );
+		_video.addEventListener( SimpleVideo.PROGRESS_UPDATE, handleProgress, false, 0, true );
+		_video.addEventListener( SimpleVideo.LOAD_UPDATE, handleLoading, false, 0, true );
+		_video.addEventListener( SimpleVideo.END, handleComplete, false, 0, true );
 		
-		screen = new ScreenModel( stage, w, h );
-		screen.addEventListener( Event.CHANGE, handleScreenChange, false, 0, true );
+		_screen = new ScreenModel( stage, w, h );
+		_screen.addEventListener( Event.CHANGE, handleScreenChange, false, 0, true );
 		
 		createControls();
 	}
 	
 	private function createControls():void
 	{
-		controlMC = new BasicButton();
+		_controlMC = new BasicButton();
 		
-		playheadMC = new Shape();
-		playheadMC.graphics.beginFill( 0xFF0000, 1 );
-		playheadMC.graphics.drawRect( 0, 1, 2, h*0.05-1 );
+		_playheadMC = new Shape();
+		_playheadMC.graphics.beginFill( 0xFF0000, 1 );
+		_playheadMC.graphics.drawRect( 0, 1, 2, h*0.05-1 );
 		
 		var border:Shape = new Shape();
 		border.graphics.lineStyle( 1, 0xFFFFFF, 1 );
 		border.graphics.drawRect( 0, 0, w-1, h*0.05 );
 		
-		loadIndicatorMC = new Shape();
-		loadIndicatorMC.graphics.beginFill( 0x333333, 0.25 );
-		loadIndicatorMC.graphics.drawRect( 0, 1, w-1, h*0.05 );
+		_loadIndicatorMC = new Shape();
+		_loadIndicatorMC.graphics.beginFill( 0x333333, 0.25 );
+		_loadIndicatorMC.graphics.drawRect( 0, 1, w-1, h*0.05 );
 		
-		controlMC.addChild(border);
-		controlMC.addChild( loadIndicatorMC );
-		controlMC.addChild( playheadMC );
+		_controlMC.addChild(border);
+		_controlMC.addChild( _loadIndicatorMC );
+		_controlMC.addChild( _playheadMC );
 		
-		controlMC.y = h-controlMC.height;
-		controlMC.addEventListener( MouseEvent.MOUSE_DOWN, startScrubbing, false, 0, true );
+		_controlMC.y = h-_controlMC.height;
+		_controlMC.addEventListener( MouseEvent.MOUSE_DOWN, startScrubbing, false, 0, true );
 		
-		addChild(controlMC);
+		addChild(_controlMC);
 	}
 	
 	private function startScrubbing( e:Event ):void
@@ -89,31 +89,31 @@ public class VideoPlayer extends Sprite {
 	
 	private function handleSeek( e:Event ):void
 	{
-		video.seek( controlMC.mouseX/controlMC.width ); //just pass in a normalized position
+		_video.seek( _controlMC.mouseX/_controlMC.width ); //just pass in a normalized position
 	}
 	
 	private function handleProgress( e:DataEvent ):void
 	{
 		var pos:Number = Number(e.data);
-		playheadMC.x = pos*(controlMC.width-playheadMC.width/2);
+		_playheadMC.x = pos*(_controlMC.width-_playheadMC.width/2);
 	}
 	
 	private function handleLoading( e:DataEvent ):void
 	{
-		loadIndicatorMC.scaleX = Number(e.data);
+		_loadIndicatorMC.scaleX = Number(e.data);
 	}
 	
 	private function handleComplete( e:Event ):void
 	{
-		video.rewind();
-		video.resume();
+		_video.rewind();
+		_video.resume();
 	}
 	
 	private function handleScreenChange( e:Event ):void
 	{
-		controlMC.y = screen.bottom - controlMC.height;
-		controlMC.x = screen.centerX - controlMC.width/2;
-		video.resize( screen.width, screen.height );
+		_controlMC.y = _screen.bottom - _controlMC.height;
+		_controlMC.x = _screen.centerX - _controlMC.width/2;
+		_video.resize( _screen.width, _screen.height );
 	}
 }
 

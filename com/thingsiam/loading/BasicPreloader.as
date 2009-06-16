@@ -1,10 +1,11 @@
-package com.thingsiam.display {
+package com.thingsiam.loading {
 	
 	/**
 	*	@author David Wicks
 	*	@since  22.07.2008
 	*	
-	*	A simple progress bar. Cleans itself up after load is complete
+	*	A flexible preloader. The view is composed in, so you can use anything that implements IProgressIndicator
+	*	Shows/hides the view at the beginning/end of loading.
 	*	To change the progress display, create an object that implements IProgressIndicator and assign it as the view
 	*	
 	*/
@@ -12,50 +13,46 @@ package com.thingsiam.display {
 	import flash.events.EventDispatcher;
 	import flash.events.*;
 	
-	import flash.display.Sprite;
-	import flash.display.DisplayObject;
-	
-	import gs.TweenLite;
-	
-	public class BasicPreloader extends Sprite {
+	public class BasicPreloader extends Object {
 		
 		private var _view:IProgressIndicator;
 		
-		public function BasicPreloader( view:IProgressIndicator=null ){
+		public function BasicPreloader( view:IProgressIndicator=null )
+		{
 			if( view == null )
 			{
 				_view = new BasicPreloaderView;
 			}
-			addChild( _view as DisplayObject );
 		}
 		
-		public function observe( observed:EventDispatcher ){
+		public function observe( observed:EventDispatcher ) : void 
+		{
 			observed.addEventListener( ProgressEvent.PROGRESS, handleProgress, false, 0, true );
 			observed.addEventListener( Event.COMPLETE, handleComplete, false, 0, true );
 			observed.addEventListener( Event.OPEN, handleStart, false, 0, true );
 		}
 		
-		public function ignore( observed:EventDispatcher ) : void {
+		public function ignore( observed:EventDispatcher ) : void
+		{
 			removeListeners(observed);			
-			_view.hide(removeFromStage);
+			_view.hide();
 		}
 		
-		private function handleStart( e:Event ) : void {
+		private function handleStart( e:Event ) : void
+		{
 			_view.show();
+			_view.displayProgress(0);
 		}
 		
-		private function handleProgress( e:ProgressEvent ) : void {
+		private function handleProgress( e:ProgressEvent ) : void
+		{
 			_view.displayProgress(e.bytesLoaded/e.bytesTotal);
 		}
 		
-		private function handleComplete( e:Event ) : void {
-			removeListeners( e.target as EventDispatcher );
-			_view.hide(removeFromStage);
-		}
-		
-		private function removeFromStage():void
+		private function handleComplete( e:Event ) : void 
 		{
-			if( parent ) parent.removeChild( this );
+			removeListeners( e.target as EventDispatcher );
+			_view.hide();
 		}
 		
 		private function removeListeners( observed:EventDispatcher ):void
@@ -65,13 +62,12 @@ package com.thingsiam.display {
 			observed.removeEventListener( Event.OPEN, handleStart );
 		}
 		
-		public function set view(value:IProgressIndicator):void {
-			if( contains(_view as DisplayObject) )
-			{
-				removeChild(_view as DisplayObject);
-			}
+		public function set view(value:IProgressIndicator):void {			
 			_view = value;
-			addChild(_view as DisplayObject);
+		}
+		
+		public function get view():IProgressIndicator {
+			return _view;
 		}
 		
 	}

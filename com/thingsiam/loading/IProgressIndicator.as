@@ -1,9 +1,9 @@
-package com.thingsiam.display {
+package com.thingsiam.loading {
 
 public interface IProgressIndicator {
 	function displayProgress(ratio:Number):void;
 	function show():void;
-	function hide(onComplete:Function):void;
+	function hide():void;
 }
 
 }
