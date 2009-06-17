@@ -16,6 +16,7 @@ package com.thingsiam.loading {
 	public class BasicPreloader extends Object {
 		
 		private var _view:IProgressIndicator;
+		private var _loadStarted:Boolean = false;
 		
 		public function BasicPreloader( view:IProgressIndicator=null )
 		{
@@ -28,6 +29,7 @@ package com.thingsiam.loading {
 		
 		public function observe( observed:EventDispatcher ) : void 
 		{
+			_loadStarted = false;
 			observed.addEventListener( ProgressEvent.PROGRESS, handleProgress, false, 0, true );
 			observed.addEventListener( Event.COMPLETE, handleComplete, false, 0, true );
 			observed.addEventListener( Event.OPEN, handleStart, false, 0, true );
@@ -41,12 +43,17 @@ package com.thingsiam.loading {
 		
 		private function handleStart( e:Event ) : void
 		{
+			_loadStarted = true;
 			_view.show();
 			_view.displayProgress(0);
 		}
 		
 		private function handleProgress( e:ProgressEvent ) : void
 		{
+			if( !_loadStarted )
+			{	//in case we're assigned to listen after the fact (or flash doesn't send the start event!)
+				handleStart(e);
+			}
 			_view.displayProgress(e.bytesLoaded/e.bytesTotal);
 		}
 		
