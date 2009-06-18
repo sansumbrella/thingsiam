@@ -1,5 +1,9 @@
 package com.thingsiam.color {
 
+import flash.display.BitmapData;
+import flash.display.IBitmapDrawable;
+import flash.display.DisplayObject;
+
 public class ColorUtils extends Object {
 	
 	public function ColorUtils()
@@ -47,6 +51,45 @@ public class ColorUtils extends Object {
 		if( channel == 128 ) return channel;
 		return channel > 128 ? (127 - (channel-128)) : (128-channel)+127;
 		*/
+	}
+	
+	public static function averageColor( src:IBitmapDrawable ):uint
+	{
+		var pixels:BitmapData;
+		var r:uint = 0;
+		var g:uint = 0;
+		var b:uint = 0;
+		
+		//get our BitmapData to work with
+		if( src is BitmapData )
+		{
+			pixels = src as BitmapData;
+		} else if( src is DisplayObject )
+		{
+			pixels = new BitmapData( (src as DisplayObject).width, (src as DisplayObject).height );
+			pixels.draw( src );
+		} else
+		{	//not sure how this would happen
+			throw new Error("You must pass something that either is a BitmapData or can be drawn into one.");
+		}
+		
+		//calculate the average color
+		for( var w:int=0; w!= pixels.width; w++ )
+		{
+			for( var h:int=0; h!= pixels.height; h++ )
+			{
+				var col:uint = pixels.getPixel(w,h);
+				r += col & 0xFF0000 >> 16;
+				g += col & 0x00FF00 >> 8;
+				b += col & 0x0000FF;
+			}
+		}
+		var pixelCount:int = pixels.width * pixels.height;
+		r = Math.round(r/pixelCount) << 16;
+		g = Math.round(g/pixelCount) << 8;
+	 	b = Math.round(b/pixelCount);
+		
+		return r | g | b;
 	}
 }
 
