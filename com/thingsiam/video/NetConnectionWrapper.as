@@ -50,7 +50,9 @@ public class NetConnectionWrapper extends NetConnection {
 		_port = value;
 	}
 	
-	public function get protocol():String{
+	public function getProtocol():String{
+		//there is a get protocol in FP10, but not in FP9
+		//this less-awesome name avoids needing to switch in and out and "override" statement
 		return _protocol;
 	}
 	
