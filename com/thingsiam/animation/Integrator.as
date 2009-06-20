@@ -10,7 +10,7 @@ public class Integrator extends Object {
 				vmax:Number = 8,
 				amax:Number = 2;
 	public var	attraction:Number = 0.3,
-				damping:Number = 0.52;
+				damping:Number = 0.65;
 	private var minStep:Number = 0.01;
 	
 	public function Integrator( value:Number = 0, target:Number = 0 )
@@ -25,8 +25,8 @@ public class Integrator extends Object {
 	{
 		vel += Numbers.limit( ( target - value )*attraction, amax );
 		vel = Numbers.limit( vel, vmax );
-		value += vel;
 		vel *= damping;
+		value += vel;
 		
 		if( !isChanging ) value = target;
 	}

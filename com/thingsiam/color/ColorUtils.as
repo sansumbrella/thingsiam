@@ -66,7 +66,7 @@ public class ColorUtils extends Object {
 			pixels = src as BitmapData;
 		} else if( src is DisplayObject )
 		{
-			pixels = new BitmapData( (src as DisplayObject).width, (src as DisplayObject).height );
+			pixels = new BitmapData( (src as DisplayObject).width, (src as DisplayObject).height, false );
 			pixels.draw( src );
 		} else
 		{	//not sure how this would happen
@@ -79,9 +79,9 @@ public class ColorUtils extends Object {
 			for( var h:int=0; h!= pixels.height; h++ )
 			{
 				var col:uint = pixels.getPixel(w,h);
-				r += col & 0xFF0000 >> 16;
-				g += col & 0x00FF00 >> 8;
-				b += col & 0x0000FF;
+				r += col >> 16 & 0xFF;
+				g += col >> 8 & 0xFF;
+				b += col & 0xFF;
 			}
 		}
 		var pixelCount:int = pixels.width * pixels.height;
