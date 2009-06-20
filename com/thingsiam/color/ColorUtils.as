@@ -53,38 +53,45 @@ public class ColorUtils extends Object {
 		*/
 	}
 	
-	public static function averageColor( src:IBitmapDrawable ):uint
+	public static function averageColor( ... sourceObjects ):uint
 	{
 		var pixels:BitmapData;
 		var r:uint = 0;
 		var g:uint = 0;
 		var b:uint = 0;
+		var pixelCount:int = 0;
 		
-		//get our BitmapData to work with
-		if( src is BitmapData )
+		for each( var src:IBitmapDrawable in sourceObjects )
 		{
-			pixels = src as BitmapData;
-		} else if( src is DisplayObject )
-		{
-			pixels = new BitmapData( (src as DisplayObject).width, (src as DisplayObject).height, false );
-			pixels.draw( src );
-		} else
-		{	//not sure how this would happen
-			throw new Error("You must pass something that either is a BitmapData or can be drawn into one.");
-		}
-		
-		//calculate the average color
-		for( var w:int=0; w!= pixels.width; w++ )
-		{
-			for( var h:int=0; h!= pixels.height; h++ )
+			//get our BitmapData to work with
+			if( src is BitmapData )
 			{
-				var col:uint = pixels.getPixel(w,h);
-				r += col >> 16 & 0xFF;
-				g += col >> 8 & 0xFF;
-				b += col & 0xFF;
+				pixels = src as BitmapData;
+			} else if( src is DisplayObject )
+			{
+				pixels = new BitmapData( (src as DisplayObject).width, (src as DisplayObject).height, false );
+				pixels.draw( src );
+			} else
+			{	//not sure how this would happen
+				throw new Error("You must pass something that either is a BitmapData or can be drawn into one.");
 			}
+
+			//calculate the average color
+			for( var w:int=0; w!= pixels.width; w++ )
+			{
+				for( var h:int=0; h!= pixels.height; h++ )
+				{
+					var col:uint = pixels.getPixel(w,h);
+					r += col >> 16 & 0xFF;
+					g += col >> 8 & 0xFF;
+					b += col & 0xFF;
+				}
+			}
+			
+			//add those pixels to the tally
+			pixelCount += pixels.width * pixels.height;
 		}
-		var pixelCount:int = pixels.width * pixels.height;
+		
 		r = Math.round(r/pixelCount) << 16;
 		g = Math.round(g/pixelCount) << 8;
 	 	b = Math.round(b/pixelCount);

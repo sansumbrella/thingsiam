@@ -7,6 +7,7 @@ import flash.display.StageScaleMode;
 
 import com.thingsiam.color.ColorUtils;
 import com.thingsiam.layout.RowArray;
+import com.thingsiam.layout.ColumnArray;
 
 [SWF(width=800, height=600, backgroundColor=0x000000, frameRate=30)]
 
@@ -23,11 +24,13 @@ public class Colors extends Sprite {
 	*	
 	*/
 	
-	private const COLOR_ONE:uint = 0xFF00FF;
-	private const COLOR_TWO:uint = 0x00FFFF;
+	private const COLOR_ONE:uint = 0x000099;
+	private const COLOR_TWO:uint = 0x0099FF;
 	private var numSteps:int = 10;
 	private var topRow:RowArray;
 	private var bottomRow:RowArray;
+	private var middleRow:RowArray;
+	private var rows:ColumnArray;
 	
 	public function Colors()
 	{
@@ -41,19 +44,28 @@ public class Colors extends Sprite {
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		
 		topRow = new RowArray(0);
+		middleRow = new RowArray(0);
 		bottomRow = new RowArray(0);
-		addChild(topRow);
-		addChild(bottomRow);
+		
 		for( var i:int=0; i != numSteps; i++ )
 		{
 			var col:uint = ColorUtils.lerpColor(COLOR_ONE, COLOR_TWO, i/(numSteps-1));
 			topRow.push(createShape( col ));
-			bottomRow.push(createShape( ColorUtils.invert(col) ));
+			middleRow.push(createShape( ColorUtils.invert(col) ));
 		}
 		
-		topRow.y = 200;
-		bottomRow.y = topRow.y + topRow.height;
-		bottomRow.x = topRow.x = (800-topRow.width)/2;
+		bottomRow.push(createShape( ColorUtils.averageColor(topRow), topRow.width/3 ));
+		bottomRow.push(createShape( ColorUtils.averageColor(middleRow), middleRow.width/3 ));
+		bottomRow.push(createShape( ColorUtils.averageColor( topRow, middleRow ), middleRow.width/3 ));
+		
+		rows = new ColumnArray(0);
+		rows.push(topRow);
+		rows.push(middleRow);
+		rows.push(bottomRow);
+		
+		rows.y = 200;
+		rows.x = (800-rows.width)/2;
+		addChild(rows);
 	}
 	
 	private function createShape( fill:uint, w:Number=50, h:Number=50 ):Shape
