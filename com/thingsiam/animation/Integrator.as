@@ -23,12 +23,15 @@ public class Integrator extends Object {
 	
 	public function update():void
 	{
-		vel += Numbers.limit( ( target - value )*attraction, amax );
-		vel = Numbers.limit( vel, vmax );
-		vel *= damping;
-		value += vel;
-		
-		if( !isChanging ) value = target;
+		if( isChanging )
+		{
+			vel += Numbers.limit( ( target - value )*attraction, amax );
+			vel = Numbers.limit( vel, vmax );
+			vel *= damping;
+			value += vel;
+		} else {
+			value = target;
+		}
 	}
 	
 	public function get isChanging():Boolean{
