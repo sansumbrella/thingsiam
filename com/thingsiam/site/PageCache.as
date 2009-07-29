@@ -3,6 +3,11 @@ package com.thingsiam.site {
 import flash.utils.Dictionary;
 import flash.display.Loader;
 import flash.events.EventDispatcher;
+import flash.events.Event;
+import flash.events.ProgressEvent;
+import flash.events.IOErrorEvent;
+
+import flash.net.URLRequest;
 
 public class PageCache extends EventDispatcher {
 	
@@ -14,6 +19,7 @@ public class PageCache extends EventDispatcher {
 	*/
 	
 	private var _pages:Dictionary;
+	private static var _instance:PageCache;
 	
 	public function PageCache( enforcer:SingletonEnforcer )
 	{
@@ -21,7 +27,8 @@ public class PageCache extends EventDispatcher {
 		init();
 	}
 	
-	public function get instance():PageCace{
+	public static function get instance():PageCache{
+		if( !_instance ) _instance = new PageCache(new SingletonEnforcer());
 		return _instance;
 	}
 	
@@ -48,25 +55,37 @@ public class PageCache extends EventDispatcher {
 		var loader:Loader = new Loader();
 		loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, handleProgress, false, 0, true);
 		loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoad, false, 0, true);
-		loader.load(new URLRequest(url));
+		loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, handleError, false, 0, true);
+		loader.load(new URLRequest(pageName));
 	}
 	
 	// image loading events
-	function handleLoad(e:Event):void {
+	private function handleLoad(e:Event):void {
 		e.target.removeEventListener( Event.COMPLETE, handleLoad );
 		e.target.removeEventListener( ProgressEvent.PROGRESS, handleProgress );
+		e.target.removeEventListener(IOErrorEvent.IO_ERROR, handleError );
 		
 		//store the page in the cache
-		var pageName:String = loader.contentLoaderInfo.url;
+		for( var i:String in e.target )
+		{
+			trace("PageCache::handleLoad()",  i, e.target[i]);
+		}
+		
+		var pageName:String = e.target.url;
 		_pages[pageName] = e.target.content as Page;
 		
 		dispatchEvent( e );
 		dispatchEvent( new SiteEvent( SiteEvent.PAGE_LOADED, pageName ) );
 	}
 
-	function handleProgress( e:ProgressEvent ):void {
+	private function handleProgress( e:ProgressEvent ):void {
 		//just pass along the event for preloaders
 		dispatchEvent( e );
+	}
+	
+	private function handleError(e:IOErrorEvent):void
+	{
+		trace("PageCache::handleError()",  e);
 	}
 	
 }

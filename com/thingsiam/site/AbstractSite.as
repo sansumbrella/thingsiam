@@ -2,13 +2,14 @@ package com.thingsiam.site {
 
 import flash.display.Sprite;
 import com.thingsiam.loading.BasicPreloader;
+import flash.events.Event;
 
 public class AbstractSite extends Sprite {
 	
-	private var _currentPage:Page,
-				_nextPage:Page;
+	protected var	_currentPage:Page,
+					_nextPage:Page;
 	
-	private var _preloader:BasicPreloader;
+	protected var _preloader:BasicPreloader;
 	
 	public function AbstractSite()
 	{
@@ -17,14 +18,27 @@ public class AbstractSite extends Sprite {
 	
 	public function loadPage( name:String ):void
 	{
-		if( _nextPage = PageCache.instance.retrieve( name ) )
+		_nextPage = PageCache.instance.retrieve( name );
+		if( _nextPage )
 		{
-			transitionToPage( _nextPage );
+			transitionToPage();
 		} else
 		{
 			PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
-			_preloader.observe( PageCache );
+			_preloader.observe( PageCache.instance );
 		}
+		
+		disableNavigation();
+	}
+	
+	protected function disableNavigation():void
+	{
+		
+	}
+	
+	protected function enableNavigation():void
+	{
+		
 	}
 	
 	private function transitionToPage( e:SiteEvent = null ):void
@@ -35,7 +49,7 @@ public class AbstractSite extends Sprite {
 			_nextPage = PageCache.instance.retrieve( e.pageName );
 		}
 		
-		if( _currentPage )
+		if( _currentPage != null )
 		{	//transition out, and transition in afterwards
 			_currentPage.addEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage );
 			_currentPage.hide();
@@ -47,11 +61,17 @@ public class AbstractSite extends Sprite {
 	
 	private function displayNextPage(e:Event = null):void
 	{	//swap over to the next page
-		removeChild( _currentPage );
+		
+		if( _currentPage && contains(_currentPage) )
+		{
+			removeChild( _currentPage );
+		}
 		
 		_currentPage = _nextPage;
 		addChild( _currentPage );
 		_currentPage.show();
+		
+		enableNavigation();
 	}
 	
 }
