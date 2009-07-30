@@ -41,6 +41,8 @@ public class SWFAddressSite extends AbstractSite {
 	
 	private function pageFrom( address:String ):String
 	{
+		//The page is the first section of the hash
+		address = address.slice(0, address.indexOf("/",1)+1);
 		for each( var p:SWFAddressPageModel in _pages )
 		{
 			if( p.address == address )
@@ -53,8 +55,8 @@ public class SWFAddressSite extends AbstractSite {
 	
 	private function sectionFrom( address:String ):String
 	{
-		
-		return "";
+		//The section is everything after the page
+		return address.slice( address.indexOf("/",1)+1, address.length );
 	}
 	
 	private function addressFrom( page:String, section:String ):String
