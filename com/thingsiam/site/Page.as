@@ -5,6 +5,8 @@ import flash.events.Event;
 
 public class Page extends Sprite {
 	
+	protected var _url:String;	//the address of the page
+	
 	public function Page()
 	{
 		super();
@@ -30,6 +32,13 @@ public class Page extends Sprite {
 		dispatchEvent( new Event( SiteEvent.PAGE_HIDDEN ));
 	}
 	
+	public function get url():String{
+		return _url;
+	}
+	
+	public function set url(value:String):void {
+		_url = value;
+	}
 }
 
 }

@@ -1,13 +1,12 @@
 package com.thingsiam.site {
 
 import flash.utils.Dictionary;
-import flash.display.Loader;
 import flash.events.EventDispatcher;
 import flash.events.Event;
 import flash.events.ProgressEvent;
 import flash.events.IOErrorEvent;
 
-import flash.net.URLRequest;
+import com.thingsiam.site.data.PageRequest;
 
 public class PageCache extends EventDispatcher {
 	
@@ -19,6 +18,7 @@ public class PageCache extends EventDispatcher {
 	*/
 	
 	private var _pages:Dictionary;
+	private var _basePath:String = "";
 	private static var _instance:PageCache;
 	
 	public function PageCache( enforcer:SingletonEnforcer )
@@ -52,11 +52,11 @@ public class PageCache extends EventDispatcher {
 	
 	private function loadPage( pageName:String ):void
 	{
-		var loader:Loader = new Loader();
+		var loader:PageRequest = new PageRequest( pageName, _basePath );
 		loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, handleProgress, false, 0, true);
 		loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoad, false, 0, true);
 		loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, handleError, false, 0, true);
-		loader.load(new URLRequest(pageName));
+		loader.loadPage();
 	}
 	
 	// image loading events
@@ -65,14 +65,10 @@ public class PageCache extends EventDispatcher {
 		e.target.removeEventListener( ProgressEvent.PROGRESS, handleProgress );
 		e.target.removeEventListener(IOErrorEvent.IO_ERROR, handleError );
 		
-		//store the page in the cache
-		for( var i:String in e.target )
-		{
-			trace("PageCache::handleLoad()",  i, e.target[i]);
-		}
+		var pageName:String = e.target.loader.pageName;
 		
-		var pageName:String = e.target.url;
 		_pages[pageName] = e.target.content as Page;
+		_pages[pageName].url = pageName;
 		
 		dispatchEvent( e );
 		dispatchEvent( new SiteEvent( SiteEvent.PAGE_LOADED, pageName ) );
@@ -86,6 +82,11 @@ public class PageCache extends EventDispatcher {
 	private function handleError(e:IOErrorEvent):void
 	{
 		trace("PageCache::handleError()",  e);
+	}
+	
+	public function set basePath(value:String):void {
+		_basePath = value;
+		trace("PageCache::set basePath()",  _basePath);
 	}
 	
 }

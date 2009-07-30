@@ -3,6 +3,7 @@ package com.thingsiam.site {
 import flash.display.Sprite;
 import com.thingsiam.loading.BasicPreloader;
 import flash.events.Event;
+import com.thingsiam.layout.ScreenModel;
 
 public class AbstractSite extends Sprite {
 	
@@ -10,10 +11,18 @@ public class AbstractSite extends Sprite {
 					_nextPage:Page;
 	
 	protected var _preloader:BasicPreloader;
+	protected var _screen:ScreenModel;
 	
 	public function AbstractSite()
 	{
 		super();
+		init();
+	}
+	
+	private function init():void
+	{
+		_screen = new ScreenModel(this.stage);
+		_preloader = new BasicPreloader();
 	}
 	
 	public function loadPage( name:String ):void
@@ -28,17 +37,7 @@ public class AbstractSite extends Sprite {
 			_preloader.observe( PageCache.instance );
 		}
 		
-		disableNavigation();
-	}
-	
-	protected function disableNavigation():void
-	{
-		
-	}
-	
-	protected function enableNavigation():void
-	{
-		
+		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_BEGIN, name) );
 	}
 	
 	private function transitionToPage( e:SiteEvent = null ):void
@@ -51,7 +50,7 @@ public class AbstractSite extends Sprite {
 		
 		if( _currentPage != null )
 		{	//transition out, and transition in afterwards
-			_currentPage.addEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage );
+			_currentPage.addEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage, false, 0, true );
 			_currentPage.hide();
 		} else
 		{	//just transition in
@@ -62,18 +61,26 @@ public class AbstractSite extends Sprite {
 	private function displayNextPage(e:Event = null):void
 	{	//swap over to the next page
 		
-		if( _currentPage && contains(_currentPage) )
+		if( _currentPage != null )
 		{
-			removeChild( _currentPage );
+			_currentPage.removeEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage );
+			if(contains(_currentPage))
+			{
+				removeChild( _currentPage );
+			}
 		}
 		
 		_currentPage = _nextPage;
 		addChild( _currentPage );
+		_currentPage.addEventListener( SiteEvent.PAGE_SHOWN, handlePageShown, false, 0, true );
 		_currentPage.show();
-		
-		enableNavigation();
 	}
 	
+	private function handlePageShown(e:Event):void
+	{
+		_currentPage.removeEventListener( SiteEvent.PAGE_SHOWN, handlePageShown );
+		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_END, _currentPage.url ));
+	}
 }
 
 }
