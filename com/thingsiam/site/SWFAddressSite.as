@@ -24,23 +24,29 @@ public class SWFAddressSite extends AbstractSite {
 	{
 		addEventListener( SiteEvent.TRANSITION_END, handleNavigationComplete, false, 0, true );
 		SWFAddress.addEventListener(SWFAddressEvent.CHANGE, handleSWFAddressChange, false, 0, true );
+		model.launchFunction = this.launchURL;
 	}
 	
 	override protected function handleModelChange(e:Event):void
 	{
 		//change SWFAddress to reflect model value
 		changeSWFAddress();
-	}	
+	}
+	
+	private function launchURL( url:String ):void
+	{
+		SWFAddress.href(url);
+	}
 	
 	private function handleSWFAddressChange(e:SWFAddressEvent):void
 	{	
 		//if the state came from outside, we need to update the model
-		model.setStateFromBrowser( e.value );
+		model.setStateQuietly( e.value );
 		//display the state in our view
 		navigateTo( model.page, model.section );
 	}
 	
-	public function changeSWFAddress():void
+	private function changeSWFAddress():void
 	{
 		SWFAddress.setValue( SiteModel.instance.address );
 	}

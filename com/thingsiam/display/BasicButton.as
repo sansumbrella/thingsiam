@@ -5,17 +5,28 @@ package com.thingsiam.display {
 	*	@since  15.07.2008
 	*	
 	*	Wraps basic mouse events and sets button modes so children can just implement handlers
+	*	Should manage state as well
 	*/
 	
 	import flash.display.Sprite;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	public class BasicButton extends Sprite {
 		
+		protected var _state:String;
+		
 		public function BasicButton(){
 			assignListeners();
+		}
+		
+		public function addChildAtPosition( child:DisplayObject, _x:Number=0, _y:Number=0 ):void
+		{
+			child.x = _x;
+			child.y = _y;
+			addChild( child );
 		}
 		
 		private function assignListeners():void

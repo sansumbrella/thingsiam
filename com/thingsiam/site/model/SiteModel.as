@@ -2,6 +2,8 @@ package com.thingsiam.site.model {
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
+import flash.net.URLRequest;
+import flash.net.navigateToURL;
 
 public class SiteModel extends EventDispatcher {
 	
@@ -11,11 +13,18 @@ public class SiteModel extends EventDispatcher {
 	
 	private var _currentSection:String;
 	private var _currentPage:String;
+	private var _launchFunction:Function;
 	
 	public function SiteModel( l:Lock )
 	{
 		super();
+		init();
+	}
+	
+	private function init():void
+	{
 		_pages = new Array();
+		_launchFunction = defaultLaunchFunction;
 	}
 	
 	public static function get instance():SiteModel{
@@ -35,12 +44,14 @@ public class SiteModel extends EventDispatcher {
 	
 	/*
 		Changing the state of the model
-		If it's a change from outside, that's already heard by the site
+		If it's a change from outside, that may have already been heard by the site
 		If it's an internal change, the site needs to be notified
 	*/
 	
-	public function setStateFromBrowser( state:String ):void
+	public function setStateQuietly( state:String ):void
 	{
+		//should only be used when the application is already at the desired state
+		//(ie never, except when something else sets the application state, like SWFAddress )
 		_currentPage = pageFrom(state);
 		_currentSection = sectionFrom(state);
 	}
@@ -65,6 +76,16 @@ public class SiteModel extends EventDispatcher {
 		}
 		_currentSection = section;
 		dispatchEvent(new Event(Event.CHANGE));
+	}
+	
+	public function launchURL( url:String ):void
+	{
+		_launchFunction(url);
+	}
+	
+	private function defaultLaunchFunction(url:String):void
+	{
+		navigateToURL( new URLRequest(url), "_self" );
 	}
 	
 	/*
@@ -117,6 +138,10 @@ public class SiteModel extends EventDispatcher {
 			}
 		}
 		return "";
+	}
+	
+	public function set launchFunction(value:Function):void {
+		_launchFunction = value;
 	}
 	
 }

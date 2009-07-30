@@ -17,6 +17,7 @@ public class AbstractSite extends Sprite {
 	protected var _navigation:NavigationController;
 	protected var _preloader:BasicPreloader;
 	protected var _screen:ScreenModel;
+	protected var _pageDepth:int = 0;
 	
 	public function AbstractSite()
 	{
@@ -26,7 +27,7 @@ public class AbstractSite extends Sprite {
 	
 	private function init():void
 	{
-		_screen = new ScreenModel(this.stage);
+		_screen = new ScreenModel(this.stage, 1024, 768);
 		_preloader = new BasicPreloader();
 		model.addEventListener( Event.CHANGE, handleModelChange );
 	}
@@ -36,7 +37,7 @@ public class AbstractSite extends Sprite {
 		navigateTo( model.page, model.section );
 	}
 	
-	public function navigateTo( page:String, section:String="" ):void
+	protected function navigateTo( page:String, section:String="" ):void
 	{
 		if( page != SiteModel.PAGE_404 )
 		{			
@@ -90,7 +91,7 @@ public class AbstractSite extends Sprite {
 			}
 			//swap over to the next page
 			_currentPage = _nextPage;
-			addChild( _currentPage );
+			addChildAt( _currentPage, _pageDepth );
 			_currentPage.addEventListener( SiteEvent.PAGE_SHOWN, handlePageShown, false, 0, true );
 			_currentPage.show();
 		} else
