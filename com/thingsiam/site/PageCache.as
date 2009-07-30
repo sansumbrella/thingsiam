@@ -86,7 +86,6 @@ public class PageCache extends EventDispatcher {
 	
 	public function set basePath(value:String):void {
 		_basePath = value;
-		trace("PageCache::set basePath()",  _basePath);
 	}
 	
 }

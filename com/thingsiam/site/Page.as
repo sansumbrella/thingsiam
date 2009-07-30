@@ -12,6 +12,11 @@ public class Page extends Sprite {
 		super();
 	}
 	
+	public function displaySection( name:String ):void
+	{
+		trace("Page::displaySection()",  name);
+	}
+	
 	public function show():void
 	{
 		handleShown();

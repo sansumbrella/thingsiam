@@ -8,10 +8,12 @@ import com.thingsiam.layout.ScreenModel;
 public class AbstractSite extends Sprite {
 	
 	protected var	_currentPage:Page,
-					_nextPage:Page;
+					_nextPage:Page,
+					_requestedSection:String;
 	
 	protected var _preloader:BasicPreloader;
 	protected var _screen:ScreenModel;
+	protected static const PAGE_404:String = "404";
 	
 	public function AbstractSite()
 	{
@@ -25,19 +27,26 @@ public class AbstractSite extends Sprite {
 		_preloader = new BasicPreloader();
 	}
 	
-	public function loadPage( name:String ):void
+	public function navigateTo( page:String, section:String="" ):void
 	{
-		_nextPage = PageCache.instance.retrieve( name );
-		if( _nextPage )
-		{
-			transitionToPage();
-		} else
-		{
-			PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
-			_preloader.observe( PageCache.instance );
-		}
+		if( page != PAGE_404 )
+		{			
+			_nextPage = PageCache.instance.retrieve( page );
+			_requestedSection = section;
+			if( _nextPage )
+			{
+				transitionToPage();
+			} else
+			{
+				PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
+				_preloader.observe( PageCache.instance );
+			}
 		
-		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_BEGIN, name) );
+			dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_BEGIN, page) );
+		} else 
+		{	//if you want to handle the 404, listen for this event
+			dispatchEvent( new SiteEvent(SiteEvent.PAGE_NOT_FOUND, page ));
+		}
 	}
 	
 	private function transitionToPage( e:SiteEvent = null ):void
@@ -48,7 +57,7 @@ public class AbstractSite extends Sprite {
 			_nextPage = PageCache.instance.retrieve( e.pageName );
 		}
 		
-		if( _currentPage != null )
+		if( _currentPage != null && _currentPage != _nextPage )
 		{	//transition out, and transition in afterwards
 			_currentPage.addEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage, false, 0, true );
 			_currentPage.hide();
@@ -59,21 +68,25 @@ public class AbstractSite extends Sprite {
 	}
 	
 	private function displayNextPage(e:Event = null):void
-	{	//swap over to the next page
-		
-		if( _currentPage != null )
-		{
-			_currentPage.removeEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage );
-			if(contains(_currentPage))
-			{
-				removeChild( _currentPage );
+	{
+		if( _currentPage != _nextPage )
+		{	
+			if( _currentPage != null )
+			{	//get rid of the current page
+				_currentPage.removeEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage );
+				if(contains(_currentPage))
+				{
+					removeChild( _currentPage );
+				}
 			}
+			//swap over to the next page
+			_currentPage = _nextPage;
+			addChild( _currentPage );
+			_currentPage.addEventListener( SiteEvent.PAGE_SHOWN, handlePageShown, false, 0, true );
+			_currentPage.show();
 		}
-		
-		_currentPage = _nextPage;
-		addChild( _currentPage );
-		_currentPage.addEventListener( SiteEvent.PAGE_SHOWN, handlePageShown, false, 0, true );
-		_currentPage.show();
+		//regardless, show the proper section
+		_currentPage.displaySection(_requestedSection);
 	}
 	
 	private function handlePageShown(e:Event):void
