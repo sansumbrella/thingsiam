@@ -57,6 +57,16 @@ public class SiteModel extends EventDispatcher {
 		dispatchEvent(new Event(Event.CHANGE));
 	}
 	
+	public function setSection( section:String="" ):void
+	{	//so sub-pages can still navigate through the main model
+		if( _currentSection == section )
+		{
+			return;
+		}
+		_currentSection = section;
+		dispatchEvent(new Event(Event.CHANGE));
+	}
+	
 	/*
 		Current page and section
 	*/
