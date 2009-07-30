@@ -1,9 +1,12 @@
 package com.thingsiam.site {
 
 import flash.display.Sprite;
-import com.thingsiam.loading.BasicPreloader;
 import flash.events.Event;
+
+import com.thingsiam.loading.BasicPreloader;
 import com.thingsiam.layout.ScreenModel;
+import com.thingsiam.site.model.SiteModel;
+import com.thingsiam.site.controllers.NavigationController;
 
 public class AbstractSite extends Sprite {
 	
@@ -11,9 +14,9 @@ public class AbstractSite extends Sprite {
 					_nextPage:Page,
 					_requestedSection:String;
 	
+	protected var _navigation:NavigationController;
 	protected var _preloader:BasicPreloader;
 	protected var _screen:ScreenModel;
-	protected static const PAGE_404:String = "404";
 	
 	public function AbstractSite()
 	{
@@ -25,11 +28,17 @@ public class AbstractSite extends Sprite {
 	{
 		_screen = new ScreenModel(this.stage);
 		_preloader = new BasicPreloader();
+		model.addEventListener( Event.CHANGE, handleModelChange );
+	}
+	
+	protected function handleModelChange(e:Event):void
+	{	//jump straight to where we're going
+		navigateTo( model.page, model.section );
 	}
 	
 	public function navigateTo( page:String, section:String="" ):void
 	{
-		if( page != PAGE_404 )
+		if( page != SiteModel.PAGE_404 )
 		{			
 			_nextPage = PageCache.instance.retrieve( page );
 			_requestedSection = section;
@@ -84,15 +93,26 @@ public class AbstractSite extends Sprite {
 			addChild( _currentPage );
 			_currentPage.addEventListener( SiteEvent.PAGE_SHOWN, handlePageShown, false, 0, true );
 			_currentPage.show();
+		} else
+		{	//we're already on the page, go to the correct section
+			_currentPage.displaySection(_requestedSection);
 		}
-		//regardless, show the proper section
-		_currentPage.displaySection(_requestedSection);
 	}
 	
 	private function handlePageShown(e:Event):void
 	{
+		//It's there, now just go to the right part
 		_currentPage.removeEventListener( SiteEvent.PAGE_SHOWN, handlePageShown );
+		_currentPage.displaySection(_requestedSection);
 		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_END, _currentPage.url ));
+	}
+	
+	/*
+		Convenience Functions
+	*/
+	
+	public function get model():SiteModel{
+		return SiteModel.instance;
 	}
 }
 
