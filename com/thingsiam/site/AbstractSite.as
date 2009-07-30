@@ -32,7 +32,7 @@ public class AbstractSite extends Sprite {
 	}
 	
 	protected function handleModelChange(e:Event):void
-	{	//jump straight to where we're going
+	{	//get to where we're going
 		navigateTo( model.page, model.section );
 	}
 	
