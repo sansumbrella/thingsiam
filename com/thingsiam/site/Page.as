@@ -2,20 +2,50 @@ package com.thingsiam.site {
 
 import flash.display.Sprite;
 import flash.events.Event;
+import com.thingsiam.site.model.PageModel;
 
 public class Page extends Sprite {
 	
+	/*
+		Controller
+		Handles turning its display state to match the model
+	*/
+	
 	protected var _url:String;	//the address of the page
+	protected var _model:PageModel;
 	
 	public function Page()
 	{
 		super();
 	}
 	
-	public function displaySection( name:String ):void
-	{
-		
+	/*
+		Navigation functions
+	*/
+	
+	public function setState( name:String ):void
+	{	//allows the outside site to tell us where to go internally (necessary for SWFAddress compatibility)
+		if( !_model )
+		{
+			throw new Error("Page _model is not yet defined. Make sure to initialize it in the subclass.");
+		}
+		_model.setState(name);
 	}
+	
+	protected function updateView( e:Event ):void
+	{
+		throw new Error("Your page hasn't implemented an update method.");
+	}
+	
+	protected function setModel( model:PageModel ):void
+	{
+		_model = model;
+		_model.addEventListener( Event.CHANGE, updateView, false, 0, true );
+	}
+	
+	/*
+		Basic Display Functions
+	*/
 	
 	public function show():void
 	{

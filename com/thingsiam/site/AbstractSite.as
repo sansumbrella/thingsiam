@@ -106,7 +106,7 @@ public class AbstractSite extends Sprite {
 			_currentPage.show();
 		} else
 		{	//we're already on the page, go to the correct section
-			_currentPage.displaySection(_requestedSection);
+			_currentPage.setState(_requestedSection);
 		}
 	}
 	
@@ -114,7 +114,7 @@ public class AbstractSite extends Sprite {
 	{
 		//It's there, now just go to the right part
 		_currentPage.removeEventListener( SiteEvent.PAGE_SHOWN, handlePageShown );
-		_currentPage.displaySection(_requestedSection);
+		_currentPage.setState(_requestedSection);
 		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_END, _currentPage.url ));
 	}
 	
