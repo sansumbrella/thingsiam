@@ -2,4 +2,6 @@ This was pretty much written by David Wicks, http://sansumbrella.com/. Some of t
 
 Updates to this code library are ongoing. It is lightweight, and meant to be used in conjunction with other Flash libraries and frameworks depending on the project at hand. The classes in it exist to ease certain tasks that may be repetitive. I have written many other helper classes here and there, and am making an attempt to consolidate them by creating this library.
 
+Oh, something exciting is happening here. A real, bare-bones site framework is being borned.
+
 The examples are compiled using the free mxmlc compiler available with the Flex SDK or Flex Builder downloads from Adobe. You may need to edit the path to the mxmlc in the BUILD file to get everything to compile correctly. I found the information available here ( http://www.senocular.com/flash/tutorials/as3withmxmlc/ ) to be quite helpful in getting started using the mxmlc compiler. Alternatively, you should be able to create .fla files in the project root and specify the appropriate example .as file as the Document class and publish with only minor adjustments.
