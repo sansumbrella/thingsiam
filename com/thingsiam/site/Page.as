@@ -14,7 +14,7 @@ public class Page extends Sprite {
 	
 	public function displaySection( name:String ):void
 	{
-		trace("Page::displaySection()",  name);
+		
 	}
 	
 	public function show():void
@@ -36,6 +36,10 @@ public class Page extends Sprite {
 	{
 		dispatchEvent( new Event( SiteEvent.PAGE_HIDDEN ));
 	}
+	
+	/*
+		
+	*/
 	
 	public function get url():String{
 		return _url;
