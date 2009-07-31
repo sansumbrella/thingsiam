@@ -48,12 +48,9 @@ public class SiteModel extends EventDispatcher {
 		If it's an internal change, the site needs to be notified
 	*/
 	
-	public function setStateQuietly( state:String ):void
+	public function setStateFromURL( state:String ):void
 	{
-		//should only be used when the application is already at the desired state
-		//(ie never, except when something else sets the application state, like SWFAddress )
-		_currentPage = pageFrom(state);
-		_currentSection = sectionFrom(state);
+		setState( pageFrom(state), sectionFrom(state));
 	}
 	
 	public function setState( page:String, section:String="" ):void

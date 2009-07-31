@@ -32,6 +32,16 @@ public class AbstractSite extends Sprite {
 		model.addEventListener( Event.CHANGE, handleModelChange );
 	}
 	
+	protected function ignoreModel():void
+	{
+		model.removeEventListener( Event.CHANGE, handleModelChange );
+	}
+	
+	protected function observeModel():void
+	{
+		model.addEventListener( Event.CHANGE, handleModelChange );
+	}
+	
 	protected function handleModelChange(e:Event):void
 	{	//get to where we're going
 		navigateTo( model.page, model.section );

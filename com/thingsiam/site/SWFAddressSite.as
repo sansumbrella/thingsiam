@@ -40,8 +40,10 @@ public class SWFAddressSite extends AbstractSite {
 	
 	private function handleSWFAddressChange(e:SWFAddressEvent):void
 	{	
-		//if the state came from outside, we need to update the model
-		model.setStateQuietly( e.value );
+		//if the state came from outside, we need to update the model, but ignore this change
+		ignoreModel();
+		model.setStateFromURL( e.value );
+		observeModel();
 		//display the state in our view
 		navigateTo( model.page, model.section );
 	}
