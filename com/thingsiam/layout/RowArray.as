@@ -101,6 +101,14 @@ public class RowArray extends Sprite {
 		addChild( _item );
 	}
 	
+	public function pushGroup( ... items ):void
+	{
+		for each( var item in items )
+		{
+			push(item);
+		}
+	}
+	
 	public function insertAt( _item:DisplayObject, _level:int ):void
 	{
 		

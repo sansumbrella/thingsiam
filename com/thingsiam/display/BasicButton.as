@@ -20,6 +20,8 @@ package com.thingsiam.display {
 		
 		public function BasicButton(){
 			assignListeners();
+			buttonMode = true;
+			mouseChildren = false;
 		}
 		
 		public function addChildAtPosition( child:DisplayObject, _x:Number=0, _y:Number=0 ):void
@@ -31,13 +33,20 @@ package com.thingsiam.display {
 		
 		private function assignListeners():void
 		{
-			buttonMode = true;
-			mouseChildren = false;
 			addEventListener( MouseEvent.MOUSE_OVER, handleOverEvent, false, 0, true );
 			addEventListener( MouseEvent.MOUSE_OUT, handleOutEvent, false, 0, true );
 			addEventListener( MouseEvent.CLICK, handleClickEvent, false, 0, true );
 			addEventListener( MouseEvent.MOUSE_DOWN, handleDownEvent, false, 0, true );
 			addEventListener( MouseEvent.MOUSE_UP, handleUpEvent, false, 0, true );
+		}
+		
+		private function removeListeners():void
+		{
+			removeEventListener( MouseEvent.MOUSE_OVER, handleOverEvent);
+			removeEventListener( MouseEvent.MOUSE_OUT, handleOutEvent);
+			removeEventListener( MouseEvent.CLICK, handleClickEvent);
+			removeEventListener( MouseEvent.MOUSE_DOWN, handleDownEvent);
+			removeEventListener( MouseEvent.MOUSE_UP, handleUpEvent);
 		}
 		
 		private function handleOverEvent( e:Event ) : void {
@@ -87,11 +96,13 @@ package com.thingsiam.display {
 		public function enable():void
 		{
 			mouseEnabled = true;
+			assignListeners();
 		}
 		
 		public function disable():void
 		{
 			mouseEnabled = false;
+			removeListeners();
 		}
 		
 	}
