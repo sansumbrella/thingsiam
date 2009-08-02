@@ -10,8 +10,8 @@ package com.thingsiam.loading {
 	*	
 	*/
 	
-	import flash.events.EventDispatcher;
 	import flash.events.*;
+	import flash.display.DisplayObject;
 	
 	public class BasicPreloader extends Object {
 		
@@ -70,14 +70,34 @@ package com.thingsiam.loading {
 			observed.removeEventListener( Event.OPEN, handleStart );
 		}
 		
-		public function set view(value:IProgressIndicator):void {			
-			_view = value;
+		public function set view(value:DisplayObject):void {
+			if( !(value is IProgressIndicator) ) throw new Error("Preloader view must implement IProgressIndicator. The getter/setter cast to DisplayObject for your convenience.");
+			_view = value as IProgressIndicator;
 		}
 		
-		public function get view():IProgressIndicator {
-			return _view;
+		public function get view():DisplayObject {
+			return _view as DisplayObject;
 		}
 		
+		/*
+			Wrappers for _view functions
+		*/
+		
+		public function set x(value:Number):void {
+			(_view as DisplayObject).x = value;
+		}
+		
+		public function set y(value:Number):void {
+			(_view as DisplayObject).y = value;
+		}
+		
+		public function get width():Number{
+			return (_view as DisplayObject).width;
+		}
+		
+		public function get height():Number{
+			return (_view as DisplayObject).height;
+		}
 	}
 	
 }
