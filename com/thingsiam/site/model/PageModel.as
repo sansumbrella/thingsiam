@@ -5,7 +5,7 @@ import flash.events.Event;
 
 public class PageModel extends EventDispatcher {
 	
-	protected var 	_states		:Array;
+	protected var 	_states				:Array;
 	protected var 	_currentState		:String,
 					_currentSection		:String, //first component of state
 					_fragments			:Array;
@@ -23,7 +23,11 @@ public class PageModel extends EventDispatcher {
 		{
 			return;
 		}
-		//add a 404 check
+		if( _states.indexOf(state.split("/")[0]) == -1 )
+		{
+			return;
+		}
+		
 		_currentState = state;
 		_fragments = _currentState.split("/");
 		_currentSection = _fragments[0];

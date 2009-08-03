@@ -5,6 +5,8 @@ import flash.display.DisplayObject;
 
 public class LayoutArray extends Sprite {
 	
+	private var _maxElements:int = 0; // Number of elements allowed in this layout, 0 = infinity
+	
 	public function LayoutArray()
 	{
 		super();

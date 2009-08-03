@@ -88,6 +88,10 @@ public class PageCache extends EventDispatcher {
 		_basePath = value;
 	}
 	
+	public function get basePath():String{
+		return _basePath;
+	}
+	
 }
 
 }

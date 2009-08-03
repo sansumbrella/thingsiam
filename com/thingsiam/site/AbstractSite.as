@@ -60,6 +60,7 @@ public class AbstractSite extends Sprite {
 			{
 				PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
 				_preloader.observe( PageCache.instance );
+				addChild(_preloader.view);
 			}
 		
 			dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_BEGIN, page) );

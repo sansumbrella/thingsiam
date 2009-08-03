@@ -3,6 +3,8 @@ package com.thingsiam.site {
 import flash.display.Sprite;
 import flash.events.Event;
 import com.thingsiam.site.model.PageModel;
+import com.thingsiam.site.PageSection;
+import flash.utils.Dictionary;
 
 public class Page extends Sprite {
 	
@@ -11,8 +13,11 @@ public class Page extends Sprite {
 		Handles turning its display state to match the model
 	*/
 	
-	protected var _url:String;	//the address of the page
-	protected var _model:PageModel;
+	protected var 	_url:String;	//the address of the page
+	protected var 	_model:PageModel;
+	protected var 	_currentState:PageSection,
+					_nextState:PageSection,
+					_possibleStates:Dictionary;
 	
 	public function Page()
 	{
@@ -24,7 +29,7 @@ public class Page extends Sprite {
 	*/
 	
 	public function setState( name:String ):void
-	{	//allows the outside site to tell us where to go internally (necessary for SWFAddress compatibility)
+	{	//allows the outside site to tell us where to go (necessary for SWFAddress compatibility)
 		if( !_model )
 		{
 			throw new Error("Page _model is not yet defined. Make sure to initialize it in the subclass.");
@@ -34,7 +39,7 @@ public class Page extends Sprite {
 	
 	protected function updateView( e:Event ):void
 	{
-		throw new Error("Your page hasn't implemented an update method.");
+		
 	}
 	
 	protected function setModel( model:PageModel ):void
