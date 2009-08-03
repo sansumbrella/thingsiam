@@ -7,6 +7,7 @@ import flash.events.ProgressEvent;
 import flash.events.IOErrorEvent;
 
 import com.thingsiam.site.data.PageRequest;
+import com.thingsiam.site.events.SiteEvent;
 
 public class PageCache extends EventDispatcher {
 	

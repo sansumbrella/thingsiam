@@ -9,22 +9,23 @@ public class PageModel extends EventDispatcher {
 	protected var 	_currentState		:String,
 					_currentSection		:String, //first component of state
 					_fragments			:Array;
+	public static const INDEX:String = "index";								
 	
 	public function PageModel()
 	{
 		super();
-		_states = new Array();
+		_states = new Array( INDEX );
 		_fragments = new Array();
 	}
 	
 	public function setState(state:String):void
 	{
 		if( _currentState == state )
-		{
+		{	//don't reload the current state
 			return;
 		}
 		if( _states.indexOf(state.split("/")[0]) == -1 )
-		{
+		{	//don't attempt to load unknown states
 			return;
 		}
 		

@@ -2,6 +2,8 @@ package com.thingsiam.site {
 
 import com.thingsiam.site.model.SWFAddressPageModel;
 import com.thingsiam.site.model.SiteModel;
+import com.thingsiam.site.events.SiteEvent;
+
 import com.asual.swfaddress.SWFAddress;
 import com.asual.swfaddress.SWFAddressEvent;
 import flash.events.Event;

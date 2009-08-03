@@ -5,6 +5,8 @@ import flash.events.Event;
 
 import com.thingsiam.loading.BasicPreloader;
 import com.thingsiam.layout.ScreenModel;
+
+import com.thingsiam.site.events.SiteEvent;
 import com.thingsiam.site.model.SiteModel;
 import com.thingsiam.site.controllers.NavigationController;
 
