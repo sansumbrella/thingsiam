@@ -7,7 +7,7 @@ import flash.display.DisplayObject;
 *	Keeps objects arranged in a column
 */
 
-public class ColumnArray extends Sprite {
+public class ColumnArray extends LayoutArray {
 	
 	private var margin:Number;
 	
@@ -32,21 +32,6 @@ public class ColumnArray extends Sprite {
 		}
 	}
 	
-	public function get( index:int ):DisplayObject
-	{
-		return( getChildAt( index ) );
-	}
-	
-	public function get length():int
-	{
-		return numChildren;
-	}
-	
-	public function dump() : void 
-	{
-		while( numChildren != 0 ) removeChildAt( 0 );
-	}
-	
 	public function get first() : DisplayObject 
 	{
 		var winner:DisplayObject = getChildAt(0);
@@ -65,11 +50,11 @@ public class ColumnArray extends Sprite {
 		return winner;
 	}
 	
-	public function push( _item:DisplayObject ):void
+	override public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
 	{
 		if( numChildren != 0 )
 		{
-			_item.y = bottom + margin;
+			_item.y = bottom + margin + _extraMargin;
 		} 
 		else _item.y = 0;
 		
@@ -99,26 +84,6 @@ public class ColumnArray extends Sprite {
 			push( _item );
 		}
 		
-	}
-	
-	public function forEach( fn:Function ):void
-	{	//passes each child as the parameter to a given function
-		for( var i:int=0; i != numChildren; i++ )
-		{
-			fn(getChildAt(i));
-		}
-	}
-	
-	public function eachIf( fn:Function, condition:Function ):void
-	{	//passes each child as the parameter to a given function if a condition is met
-		for( var i:int=0; i != numChildren; i++ )
-		{
-			var c:DisplayObject = getChildAt(i);
-			if( condition(c) )
-			{
-				fn( c );
-			}
-		}
 	}
 }
 

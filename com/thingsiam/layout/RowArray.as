@@ -7,7 +7,7 @@ import flash.display.DisplayObject;
 *	Keeps objects arranged in a row	
 */
 
-public class RowArray extends Sprite {
+public class RowArray extends LayoutArray {
 	
 	private var margin:Number;
 	
@@ -51,21 +51,6 @@ public class RowArray extends Sprite {
 		}
 	}
 	
-	public function get( index:int ):DisplayObject
-	{
-		return( getChildAt( index ) );
-	}
-	
-	public function get length():int
-	{
-		return numChildren;
-	}
-	
-	public function dump() : void 
-	{
-		while( numChildren != 0 ) removeChildAt( 0 );
-	}
-	
 	public function get first() : DisplayObject 
 	{
 		var winner:DisplayObject = getChildAt(0);
@@ -90,7 +75,7 @@ public class RowArray extends Sprite {
 		return obj.x + obj.width;
 	}
 	
-	public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
+	override public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
 	{
 		if( numChildren != 0 )
 		{
@@ -99,14 +84,6 @@ public class RowArray extends Sprite {
 		else _item.x = 0;
 		
 		addChild( _item );
-	}
-	
-	public function pushGroup( ... items ):void
-	{
-		for each( var item in items )
-		{
-			push(item);
-		}
 	}
 	
 	public function insertAt( _item:DisplayObject, _level:int ):void
@@ -125,26 +102,6 @@ public class RowArray extends Sprite {
 			}
 		} else {
 			push( _item );
-		}
-	}
-	
-	public function forEach( fn:Function ):void
-	{	//passes each child as the parameter to a given function
-		for( var i:int=0; i != numChildren; i++ )
-		{
-			fn(getChildAt(i));
-		}
-	}
-	
-	public function eachIf( fn:Function, condition:Function ):void
-	{	//passes each child as the parameter to a given function if a condition is met
-		for( var i:int=0; i != numChildren; i++ )
-		{
-			var c:DisplayObject = getChildAt(i);
-			if( condition(c) )
-			{
-				fn( c );
-			}
 		}
 	}
 }
