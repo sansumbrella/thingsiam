@@ -64,8 +64,6 @@ public class AbstractSite extends Sprite {
 				_preloader.observe( PageCache.instance );
 				addChild(_preloader.view);
 			}
-		
-			dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_BEGIN, page) );
 		} else 
 		{	//if you want to handle the 404, listen for this event
 			dispatchEvent( new SiteEvent(SiteEvent.PAGE_NOT_FOUND, page ));
@@ -111,6 +109,7 @@ public class AbstractSite extends Sprite {
 		{	//we're already on the page, go to the correct section
 			_currentPage.setState(_requestedSection);
 		}
+		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_BEGIN, _currentPage.url) );
 	}
 	
 	private function handlePageShown(e:Event):void

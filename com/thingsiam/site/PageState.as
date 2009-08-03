@@ -1,7 +1,9 @@
 package com.thingsiam.site {
 
 import flash.display.Sprite;
+import flash.geom.Rectangle;
 import flash.events.Event;
+
 import com.thingsiam.site.events.SiteEvent;
 
 public class PageState extends Sprite {
@@ -24,6 +26,11 @@ public class PageState extends Sprite {
 	public function hide():void
 	{
 		handleHidden();
+	}
+	
+	public function resize( rect:Rectangle ):void
+	{
+		
 	}
 	
 	protected function handleShown():void
