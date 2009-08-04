@@ -11,9 +11,9 @@ public class ColumnArray extends LayoutArray {
 	
 	private var margin:Number;
 	
-	public function ColumnArray( margin:Number = 6 )
+	public function ColumnArray( margin:Number = 6, maxElements:int=-1 )
 	{
-		super();
+		super(maxElements);
 		this.margin = margin;
 	}
 	
@@ -50,15 +50,23 @@ public class ColumnArray extends LayoutArray {
 		return winner;
 	}
 	
-	override public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
+	override public function push( item:DisplayObject ):Boolean
 	{
+		if( numChildren == _maxElements )
+		{
+			return false;
+		}
+			
 		if( numChildren != 0 )
 		{
-			_item.y = bottom + margin + _extraMargin;
-		} 
-		else _item.y = 0;
+			item.y = bottom + margin;
+		} else 
+		{
+			item.y = 0;
+		}
 		
-		addChild( _item );
+		addChild( item );
+		return true;
 	}
 	
 	public function get bottom():Number{

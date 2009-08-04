@@ -5,11 +5,12 @@ import flash.display.DisplayObject;
 
 public class LayoutArray extends Sprite {
 	
-	private var _maxElements:int = 0; // Number of elements allowed in this layout, 0 = infinity
+	protected var _maxElements:int = -1; // Number of elements allowed in this layout, -1 = infinity
 	
-	public function LayoutArray()
+	public function LayoutArray( maxElements:int=-1 )
 	{
 		super();
+		_maxElements = maxElements;
 	}
 	
 	public function pushGroup( ... items ):void
@@ -20,9 +21,10 @@ public class LayoutArray extends Sprite {
 		}
 	}
 	
-	public function push(item:DisplayObject, extraMargin:Number=0):void
+	public function push(item:DisplayObject):Boolean
 	{
 		addChild(item);
+		return true;
 	}
 	
 	public function forEach( fn:Function ):void
@@ -53,6 +55,14 @@ public class LayoutArray extends Sprite {
 	public function get length():int
 	{
 		return numChildren;
+	}
+	
+	public function get maxElements():int{
+		return _maxElements;
+	}
+	
+	public function set maxElements(value:int):void {
+		_maxElements = value;
 	}
 	
 	public function dump() : void 

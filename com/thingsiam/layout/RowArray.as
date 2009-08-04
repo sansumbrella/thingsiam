@@ -11,10 +11,9 @@ public class RowArray extends LayoutArray {
 	
 	private var margin:Number;
 	
-	public function RowArray( _margin:Number = 6 )
+	public function RowArray( _margin:Number=6, maxElements:int=-1 )
 	{
-		super();
-		
+		super(maxElements);
 		margin = _margin;
 	}
 	
@@ -75,15 +74,20 @@ public class RowArray extends LayoutArray {
 		return obj.x + obj.width;
 	}
 	
-	override public function push( _item:DisplayObject, _extraMargin:Number=0 ):void
+	override public function push( _item:DisplayObject ):Boolean
 	{
+		if( numChildren == _maxElements )
+		{
+			return false;
+		}
 		if( numChildren != 0 )
 		{
-			_item.x = right + margin + _extraMargin;
+			_item.x = right + margin;
 		} 
 		else _item.x = 0;
 		
 		addChild( _item );
+		return true;
 	}
 	
 	public function insertAt( _item:DisplayObject, _level:int ):void
