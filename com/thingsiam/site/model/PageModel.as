@@ -8,6 +8,7 @@ public class PageModel extends EventDispatcher {
 	protected var 	_states				:Array;
 	protected var 	_currentState		:String,
 					_currentSection		:String, //first component of state
+					_currentSubsection	:String, //remaining components of state
 					_fragments			:Array;
 	public static const INDEX:String = "index";								
 	
@@ -32,6 +33,14 @@ public class PageModel extends EventDispatcher {
 		_currentState = state;
 		_fragments = _currentState.split("/");
 		_currentSection = _fragments[0];
+		_currentSubsection = "";
+		if( _fragments.length > 1 )
+		{
+			for( var i:int=1; i!=_fragments.length; i++ )
+			{
+				_currentSubsection += _fragments[i] + "/";
+			}
+		}
 		dispatchEvent( new Event(Event.CHANGE) );
 	}
 	
@@ -43,6 +52,9 @@ public class PageModel extends EventDispatcher {
 		return _currentSection;
 	}
 	
+	public function get subsection():String{
+		return _currentSubsection;
+	}
 }
 
 }

@@ -37,7 +37,7 @@ public class Page extends PageState {
 		Navigation functions
 	*/
 	
-	public function setState( name:String ):void
+	override public function setState( name:String ):void
 	{	//allows the outside site to tell us where to go (necessary for SWFAddress compatibility)
 		if( !_model )
 		{
@@ -83,7 +83,7 @@ public class Page extends PageState {
 	
 	protected function handleStateShown(e:Event):void
 	{
-		
+		_currentState.setState(_model.subsection);
 	}
 	
 	protected function setModel( model:PageModel ):void

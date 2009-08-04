@@ -28,17 +28,22 @@ public class PageState extends Sprite {
 		handleHidden();
 	}
 	
+	public function setState(state:String):void
+	{
+		
+	}
+	
 	public function resize( rect:Rectangle ):void
 	{
 		
 	}
 	
-	protected function handleShown():void
+	protected function handleShown(e:Event=null):void
 	{
 		dispatchEvent( new Event( SiteEvent.PAGE_SHOWN ));
 	}
 	
-	protected function handleHidden():void
+	protected function handleHidden(e:Event=null):void
 	{
 		dispatchEvent( new Event( SiteEvent.PAGE_HIDDEN ));
 	}
