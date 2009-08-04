@@ -1,7 +1,17 @@
 This was pretty much written by David Wicks, http://sansumbrella.com/. Some of the ideas (particularly iteration) were taken from Advanced Actionscript 3 with Design Patterns. You are free to use it for personal or commercial projects. I've found it useful for both.
 
-Updates to this code library are ongoing. It is lightweight, and meant to be used in conjunction with other Flash libraries and frameworks depending on the project at hand. The classes in it exist to ease certain tasks that may be repetitive. I have written many other helper classes here and there, and am making an attempt to consolidate them by creating this library.
+Updates to this code library are ongoing. It is lightweight, and meant to be used in conjunction with other Flash libraries and frameworks depending on the project at hand. The classes in it exist to ease certain tasks that may be repetitive. I have written many helper classes here and there, and consolidating them in this library.
 
-Oh, something exciting is happening here. A real, bare-bones site framework is being borned. Except flash decided not to like looking over here for classes. So I'll just be updating this bit when I'm done making a site using it. :/
+Right now, some of those tasks include:
+Preloading content
+DisplayObject Layouts (row, column, grid)
+Simple video playback
+Classes for continuous animation (I recommend the Greensock TweenLite family for time-based animations)
+Color utilities
+Simple data caches
+Iteration
+Vector3D and Number utilities (Vector3D based on Dan Shiffman's)
+
+Oh, something exciting is happening here. A real, bare-bones site framework is being borned. It's managing basic navigation tasks and whatnot and integrating SWFAddress. You'll still probably prefer a mature framework like Gaia for your own needs.
 
 The examples are compiled using the free mxmlc compiler available with the Flex SDK or Flex Builder downloads from Adobe. You may need to edit the path to the mxmlc in the BUILD file to get everything to compile correctly. I found the information available here ( http://www.senocular.com/flash/tutorials/as3withmxmlc/ ) to be quite helpful in getting started using the mxmlc compiler. Alternatively, you should be able to create .fla files in the project root and specify the appropriate example .as file as the Document class and publish with only minor adjustments.
