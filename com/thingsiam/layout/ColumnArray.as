@@ -50,6 +50,18 @@ public class ColumnArray extends LayoutArray {
 		return winner;
 	}
 	
+	override public function cleanup():void
+	{
+		var yPos:Number = 0;
+		
+		for( var i:int=0; i != numChildren; i++ )
+		{
+			var d:DisplayObject = getChildAt(i);
+			d.y = yPos;
+			yPos += d.height + margin;
+		}
+	}
+	
 	override public function push( item:DisplayObject ):Boolean
 	{
 		if( numChildren == _maxElements )

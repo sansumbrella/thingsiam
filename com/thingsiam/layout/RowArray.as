@@ -38,7 +38,7 @@ public class RowArray extends LayoutArray {
 		}
 	}
 	
-	public function cleanup():void
+	override public function cleanup():void
 	{
 		var xPos:Number = 0;
 		

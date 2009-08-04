@@ -37,13 +37,13 @@ public class Page extends PageState {
 		Navigation functions
 	*/
 	
-	override public function setState( name:String ):void
+	override public function setState( name:String, force:Boolean=false ):void
 	{	//allows the outside site to tell us where to go (necessary for SWFAddress compatibility)
 		if( !_model )
 		{
 			throw new Error("Page _model is not yet defined. Make sure to initialize it in the subclass.");
 		}
-		_model.setState(name);
+		_model.setState(name, force);
 	}
 	
 	protected function updateView( e:Event ):void
@@ -78,12 +78,13 @@ public class Page extends PageState {
 		_currentState = _nextState;
 		addChildAt( _currentState, _stateDepth );
 		_currentState.addEventListener( SiteEvent.PAGE_SHOWN, handleStateShown, false, 0, true );
+		_currentState.setState(_model.subsection);
 		_currentState.show();
 	}
 	
 	protected function handleStateShown(e:Event):void
 	{
-		_currentState.setState(_model.subsection);
+		
 	}
 	
 	protected function setModel( model:PageModel ):void

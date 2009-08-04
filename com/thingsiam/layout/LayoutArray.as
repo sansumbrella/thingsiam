@@ -47,6 +47,11 @@ public class LayoutArray extends Sprite {
 		}
 	}
 	
+	public function cleanup():void
+	{
+		
+	}
+	
 	public function get( index:int ):DisplayObject
 	{
 		return( getChildAt( index ) );

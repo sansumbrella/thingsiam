@@ -19,13 +19,13 @@ public class PageModel extends EventDispatcher {
 		_fragments = new Array();
 	}
 	
-	public function setState(state:String):void
+	public function setState(state:String, force:Boolean=false):void
 	{
-		if( _currentState == state )
+		if( _currentState == state && !force )
 		{	//don't reload the current state
 			return;
 		}
-		if( _states.indexOf(state.split("/")[0]) == -1 )
+		if( _states.indexOf(state.split("/")[0]) == -1  && !force )
 		{	//don't attempt to load unknown states
 			return;
 		}

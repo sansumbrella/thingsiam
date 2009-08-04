@@ -12,6 +12,7 @@ public class PageState extends Sprite {
 	*	A showable/hidable sprite that lets the world know when it's transitions are complete	
 	*	
 	*/
+	protected var _hidden:Boolean = true;
 	
 	public function PageState()
 	{
@@ -20,15 +21,27 @@ public class PageState extends Sprite {
 	
 	public function show():void
 	{
+		_hidden = false;
 		handleShown();
 	}
 	
-	public function hide():void
+	public final function hide():void
 	{
+		if(_hidden)
+		{
+			handleHidden();
+		} else
+		{
+			playHideTransition();
+		}
+	}
+	
+	protected function playHideTransition():void
+	{	//do what you want in here
 		handleHidden();
 	}
 	
-	public function setState(state:String):void
+	public function setState(state:String, force:Boolean=false):void
 	{
 		
 	}
@@ -45,6 +58,7 @@ public class PageState extends Sprite {
 	
 	protected function handleHidden(e:Event=null):void
 	{
+		_hidden = true;
 		dispatchEvent( new Event( SiteEvent.PAGE_HIDDEN ));
 	}
 }
