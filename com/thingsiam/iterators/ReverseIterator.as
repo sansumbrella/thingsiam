@@ -7,7 +7,7 @@ package com.thingsiam.iterators {
 
 	public class ReverseIterator implements IIterator {
 		
-		private var index:uint = 0,
+		private var index:int = 0,
 					collection:Array;
 		
 		public function ReverseIterator( _collection:Array ){

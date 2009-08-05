@@ -9,7 +9,7 @@ package com.thingsiam.iterators {
 	
 	public class ForwardIterator implements IIterator {
 		
-		private var index:uint = 0,
+		private var index:int = 0,
 					collection:Array;
 		
 		public function ForwardIterator( _collection:Array ){
