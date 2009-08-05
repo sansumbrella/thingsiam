@@ -35,7 +35,7 @@ public class SWFAddressSite extends AbstractSite {
 		changeSWFAddress();
 	}
 	
-	private function launchURL( url:String ):void
+	protected function launchURL( url:String ):void
 	{
 		SWFAddress.href(url);
 	}
