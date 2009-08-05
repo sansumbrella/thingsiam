@@ -35,6 +35,14 @@ public class LayoutArray extends Sprite {
 		}
 	}
 	
+	public function forEachWithIndex( fn:Function ):void
+	{
+		for( var i:int=0; i != numChildren; i++ )
+		{
+			fn( getChildAt(i), i );
+		}
+	}
+	
 	public function eachIf( fn:Function, condition:Function ):void
 	{	//passes each child as the parameter to a given function if a condition is met
 		for( var i:int=0; i != numChildren; i++ )
