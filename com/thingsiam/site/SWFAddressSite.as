@@ -12,6 +12,7 @@ public class SWFAddressSite extends AbstractSite {
 	
 	/**
 	*	Communicates with SWFAddress to receive load events and set the address after navigation
+	*	I'm currently developing on top of this, so the original AbstractSite might not work properly
 	*	I hope the name and intent make it clear that you need SWFAddress, available from:
 	*	http://www.asual.com/swfaddress/
 	*/

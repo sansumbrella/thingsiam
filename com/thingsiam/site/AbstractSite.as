@@ -20,6 +20,7 @@ public class AbstractSite extends Sprite {
 	protected var _preloader:BasicPreloader;
 	protected var _screen:ScreenModel;
 	protected var _pageDepth:int = 0;
+	private var _ready	:Boolean = true;
 	
 	public function AbstractSite()
 	{
@@ -51,22 +52,25 @@ public class AbstractSite extends Sprite {
 	
 	protected function navigateTo( page:String, section:String="" ):void
 	{
-		if( page != SiteModel.PAGE_404 )
-		{			
-			_nextPage = PageCache.instance.retrieve( page );
-			_requestedSection = section;
-			if( _nextPage )
-			{
-				transitionToPage();
-			} else
-			{
-				PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
-				_preloader.observe( PageCache.instance );
-				addChild(_preloader.view);
+		if(_ready)
+		{
+			if( page != SiteModel.PAGE_404 )
+			{			
+				_nextPage = PageCache.instance.retrieve( page );
+				_requestedSection = section;
+				if( _nextPage )
+				{
+					transitionToPage();
+				} else
+				{
+					PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
+					_preloader.observe( PageCache.instance );
+					addChild(_preloader.view);
+				}
+			} else 
+			{	//if you want to handle the 404, listen for this event
+				dispatchEvent( new SiteEvent(SiteEvent.PAGE_NOT_FOUND, page ));
 			}
-		} else 
-		{	//if you want to handle the 404, listen for this event
-			dispatchEvent( new SiteEvent(SiteEvent.PAGE_NOT_FOUND, page ));
 		}
 	}
 	
@@ -124,8 +128,20 @@ public class AbstractSite extends Sprite {
 		Convenience Functions
 	*/
 	
-	public function get model():SiteModel{
+	protected function get model():SiteModel{
 		return SiteModel.instance;
+	}
+	
+	protected function get ready():Boolean{
+		return _ready;
+	}
+	
+	protected function set ready(value:Boolean):void {
+		_ready = value;
+		if( _ready )
+		{
+			navigateTo(model.page, model.section);
+		}
 	}
 }
 
