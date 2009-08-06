@@ -17,6 +17,7 @@ package com.thingsiam.display {
 	public class BasicButton extends Sprite {
 		
 		protected var _state:String;
+		protected var _id:int = 0;
 		
 		public function BasicButton(){
 			assignListeners();
@@ -103,6 +104,14 @@ package com.thingsiam.display {
 		{
 			mouseEnabled = false;
 			removeListeners();
+		}
+		
+		public function get id():int{
+			return _id;
+		}
+		
+		public function set id(value:int):void {
+			_id = value;
 		}
 		
 	}
