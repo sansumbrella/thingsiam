@@ -23,7 +23,6 @@ public class Paginator extends Sprite {
 		super();
 		_layoutType =  		args.hasOwnProperty("type") ? args.type : ColumnArray;
 		_layoutParameters = args.hasOwnProperty("params") ? args.params : {margin:5};
-		trace("Paginator::Paginator()",  args.type, args.params);
 		init();
 	}
 	
