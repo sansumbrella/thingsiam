@@ -9,26 +9,27 @@ import flash.display.DisplayObject;
 
 public class RowArray extends LayoutArray {
 	
-	private var margin:Number;
+	private var _margin:Number;
 	
-	public function RowArray( _margin:Number=6, maxElements:int=-1 )
+	public function RowArray( args:Object=null )
 	{
-		super(maxElements);
-		margin = _margin;
+		if( args == null ) args = {};
+		super(args);
+		_margin = args.hasOwnProperty("margin") ? args.margin : 5;
 	}
 	
-	public function remove( _item:DisplayObject ):int
+	public function remove( item:DisplayObject ):int
 	{
-		if( contains(_item) )
+		if( contains(item) )
 		{
-			var ret:int = getChildIndex( _item );
-			removeChild( _item );
+			var ret:int = getChildIndex( item );
+			removeChild( item );
 			
 			for( var i:int=0; i != numChildren; i++ )
 			{
-				if( getChildAt(i).x > _item.x )
+				if( getChildAt(i).x > item.x )
 				{
-					getChildAt(i).x -= _item.width + margin;
+					getChildAt(i).x -= item.width + _margin;
 				}
 			}
 			return ret;
@@ -46,7 +47,7 @@ public class RowArray extends LayoutArray {
 		{
 			var d:DisplayObject = getChildAt(i);
 			d.x = xPos;
-			xPos += d.width + margin;
+			xPos += d.width + _margin;
 		}
 	}
 	
@@ -74,7 +75,7 @@ public class RowArray extends LayoutArray {
 		return obj.x + obj.width;
 	}
 	
-	override public function push( _item:DisplayObject ):Boolean
+	override public function push( item:DisplayObject ):Boolean
 	{
 		if( numChildren == _maxElements )
 		{
@@ -82,30 +83,30 @@ public class RowArray extends LayoutArray {
 		}
 		if( numChildren != 0 )
 		{
-			_item.x = right + margin;
+			item.x = right + _margin;
 		} 
-		else _item.x = 0;
+		else item.x = 0;
 		
-		addChild( _item );
+		addChild( item );
 		return true;
 	}
 	
-	public function insertAt( _item:DisplayObject, _level:int ):void
+	public function insertAt( item:DisplayObject, level:int ):void
 	{
 		
 		if( numChildren != 0 ){
-			addChildAt( _item, _level );
+			addChildAt( item, level );
 			var xPos:Number = 0;
-			for( var i:int = 0; i < _level; i++ ){
-				xPos += getChildAt( i ) + margin;
+			for( var i:int = 0; i < level; i++ ){
+				xPos += getChildAt( i ) + _margin;
 			}
-			_item.x = xPos;
+			item.x = xPos;
 
-			for( i = _level+1; i < numChildren; i++ ){
-				getChildAt( i ).x += (_item.width + margin);
+			for( i = level+1; i < numChildren; i++ ){
+				getChildAt( i ).x += (item.width + _margin);
 			}
 		} else {
-			push( _item );
+			push( item );
 		}
 	}
 }

@@ -12,17 +12,18 @@ public class Paginator extends Sprite {
 	private var _currentPage:LayoutArray;
 	private var _currentIndex:int=0;
 	private var _layoutType:Class;
-	private var _itemsPerPage:int;
-	private var _wrapEnd:Boolean = true;
+	private var _layoutParameters:Object;
+	private var _wrapEnd:Boolean = false;
 	
 	public static const RESIZE:String="resize";
 	public static const TURN:String="pageTurn";
 	
-	public function Paginator( layoutType:Class, itemsPerPage:int=5 )
+	public function Paginator( args:Object )
 	{
 		super();
-		_layoutType = layoutType;
-		_itemsPerPage = itemsPerPage;
+		_layoutType =  		args.hasOwnProperty("type") ? args.type : ColumnArray;
+		_layoutParameters = args.hasOwnProperty("params") ? args.params : {margin:5};
+		trace("Paginator::Paginator()",  args.type, args.params);
 		init();
 	}
 	
@@ -39,6 +40,7 @@ public class Paginator extends Sprite {
 	
 	public function requestPage( id:int ):void
 	{	//pages are zero-indexed, just like an array
+		id = constrainPageID(id);
 		if( _pages[id] == _currentPage )
 		{	//already there
 			return;
@@ -58,7 +60,6 @@ public class Paginator extends Sprite {
 	
 	private function setPage(id:int):void
 	{
-		id = constrainPageID(id);
 		if( _currentPage && contains(_currentPage) ) removeChild(_currentPage);
 		_currentPage = _pages[id];
 		addChild(_currentPage);
@@ -100,8 +101,7 @@ public class Paginator extends Sprite {
 	
 	private function addPage():void
 	{
-		_pages.push( new _layoutType() )
-		_pages[_pages.length-1].maxElements = _itemsPerPage;
+		_pages.push( new _layoutType(_layoutParameters) );
 		dispatchEvent( new Event(RESIZE) );	//announce change in size
 	}
 	

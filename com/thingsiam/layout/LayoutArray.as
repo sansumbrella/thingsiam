@@ -7,10 +7,11 @@ public class LayoutArray extends Sprite {
 	
 	protected var _maxElements:int = -1; // Number of elements allowed in this layout, -1 = infinity
 	
-	public function LayoutArray( maxElements:int=-1 )
+	public function LayoutArray( args:Object=null )
 	{
 		super();
-		_maxElements = maxElements;
+		if( args == null ) args = {};
+		_maxElements = args.hasOwnProperty("maxElements") ? args.maxElements : -1;
 	}
 	
 	public function pushGroup( ... items ):void

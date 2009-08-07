@@ -12,32 +12,41 @@ public class GridArray extends LayoutArray {
 	
 	private var _marginX		:Number,
 				_marginY		:Number,
+				_columnSize		:Number,
+				_rowSize		:Number,
 				_rows			:int,
 				_columns		:int,
 				_currentRow		:int,
 				_currentColumn	:int;
 	
-	public function GridArray( marginX:Number = 10, marginY:Number = 10, rows:int = 2, columns:int = 2 )
-	{
-		super(rows*columns);
-		_marginX = marginX;
-		_marginY = marginY;
-		_rows = rows;
-		_columns = columns;
+	public function GridArray( args:Object=null )
+	{	
+		if( args == null ) args = {};
+		_rowSize	 	= 	args.hasOwnProperty("rowSize") ? 	args.rowSize : 	100;
+		_columnSize		= 	args.hasOwnProperty("columnSize") ? args.columnSize : 100;
+		_marginX = 	args.hasOwnProperty("marginX") ? args.marginX : 0;
+		_marginY = 	args.hasOwnProperty("marginY") ? args.marginY : 0;
+		_rows = 	args.hasOwnProperty("rows") 	? args.rows : 2;
+		_columns = 	args.hasOwnProperty("columns") ? args.columns : 2;
 		_currentRow = 0;
 		_currentColumn = 0;
+		args["maxElements"] = _rows*_columns;
+		super(args);
+		
+		trace("GridArray::GridArray()",  _rows*_columns, _maxElements);
 	}
 	
 	override public function push(item:DisplayObject):Boolean
 	{
 		if( numChildren == _maxElements )
 		{
+			trace("GridArray:: it's full",  numChildren);
 			return false;
 		}
 		if( numChildren != 0 )
 		{
-			item.x = last.x + last.width + _marginX;
-			item.y = last.y;
+			item.x = _currentColumn * _columnSize + _marginX;
+			item.y = _currentRow * _rowSize + _marginY;
 		}
 		
 		_currentColumn++;
@@ -45,7 +54,6 @@ public class GridArray extends LayoutArray {
 		{
 			_currentColumn = 0;
 			_currentRow++;
-			item.y += _marginY + last.height;
 		}
 		
 		addChild(item);

@@ -11,10 +11,11 @@ public class ColumnArray extends LayoutArray {
 	
 	private var margin:Number;
 	
-	public function ColumnArray( margin:Number = 6, maxElements:int=-1 )
+	public function ColumnArray( args:Object=null )
 	{
-		super(maxElements);
-		this.margin = margin;
+		if( args == null ) args = {};
+		super(args);
+		margin = args.hasOwnProperty("margin") ? args.margin : 5;
 	}
 	
 	public function remove( _item:DisplayObject ):void
