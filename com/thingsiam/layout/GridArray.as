@@ -33,14 +33,12 @@ public class GridArray extends LayoutArray {
 		args["maxElements"] = _rows*_columns;
 		super(args);
 		
-		trace("GridArray::GridArray()",  _rows*_columns, _maxElements);
 	}
 	
 	override public function push(item:DisplayObject):Boolean
 	{
 		if( numChildren == _maxElements )
 		{
-			trace("GridArray:: it's full",  numChildren);
 			return false;
 		}
 		if( numChildren != 0 )
