@@ -2,6 +2,8 @@ package com.thingsiam.layout {
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.events.EventDispatcher;
 
 import com.thingsiam.display.BasicButton;
 
@@ -47,6 +49,36 @@ public class PaginationController extends Sprite {
 	{
 		_paginator.requestPage((e.target as BasicButton).id);
 	}
+	
+	//
+	//	Add control views to the controller
+	//
+	
+	public function addNextButton(e:EventDispatcher):void
+	{
+		e.addEventListener( MouseEvent.CLICK, handleNext, false, 0, true );
+	}
+	
+	public function addPreviousButton(e:EventDispatcher):void
+	{
+		e.addEventListener( MouseEvent.CLICK, handlePrevious, false, 0, true );
+	}
+	
+	// remove controls
+	
+	public function removeNextButton(e:EventDispatcher):void
+	{
+		e.removeEventListener( MouseEvent.CLICK, handleNext );
+	}
+	
+	public function removePreviousButton(e:EventDispatcher):void
+	{
+		e.removeEventListener( MouseEvent.CLICK, handlePrevious );
+	}
+	
+	//
+	//	To be overridden by subclasses
+	//
 	
 	protected function updateView():void
 	{

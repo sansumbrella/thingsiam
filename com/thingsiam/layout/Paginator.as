@@ -8,12 +8,12 @@ import com.thingsiam.iterators.*;
 
 public class Paginator extends Sprite {
 	
-	private var _pages:Array;	//contains only LayoutArray objects
-	private var _currentPage:LayoutArray;
-	private var _currentIndex:int=0;
-	private var _layoutType:Class;
-	private var _layoutParameters:Object;
-	private var _wrapEnd:Boolean = false;
+	protected var _pages:Array;	//contains only LayoutArray objects
+	protected var _currentPage:LayoutArray;
+	protected var _currentIndex:int=0;
+	protected var _layoutType:Class;
+	protected var _layoutParameters:Object;
+	protected var _wrapEnd:Boolean = false;
 	
 	public static const RESIZE:String="resize";
 	public static const TURN:String="pageTurn";
@@ -57,7 +57,7 @@ public class Paginator extends Sprite {
 		requestPage(_currentIndex-1);
 	}
 	
-	private function setPage(id:int):void
+	protected function setPage(id:int):void
 	{
 		if( _currentPage && contains(_currentPage) ) removeChild(_currentPage);
 		_currentPage = _pages[id];
@@ -98,7 +98,7 @@ public class Paginator extends Sprite {
 		}
 	}
 	
-	private function addPage():void
+	protected function addPage():void
 	{
 		_pages.push( new _layoutType(_layoutParameters) );
 		dispatchEvent( new Event(RESIZE) );	//announce change in size
@@ -107,6 +107,10 @@ public class Paginator extends Sprite {
 	public function dump():void
 	{
 		if( _currentPage && contains(_currentPage)) removeChild(_currentPage);
+		for each( var page:LayoutArray in _pages )
+		{
+			page.dump();
+		}
 		_pages = new Array();
 		addPage();
 		requestPage(0);

@@ -4,8 +4,8 @@ package com.thingsiam.display {
 	*	@author David Wicks
 	*	@since  15.07.2008
 	*	
-	*	Wraps basic mouse events and sets button modes so children can just implement handlers
-	*	Should manage state as well
+	*	Wraps basic mouse events and sets button modes so children can just implement handlers (AS2 style)
+	*	State management is on the way
 	*/
 	
 	import flash.display.Sprite;
