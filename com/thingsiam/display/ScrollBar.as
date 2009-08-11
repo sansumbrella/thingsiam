@@ -1,10 +1,9 @@
 package com.thingsiam.display {
 
 import flash.display.Sprite;
-import flash.geom.Rectangle;
-
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.geom.Rectangle;
 
 public class ScrollBar extends Sprite {
 	
@@ -61,10 +60,12 @@ public class ScrollBar extends Sprite {
 		switch (_orientation)
 		{
 			case HORIZONTAL:
+				if( contentRect.width == 0 ) break;
 				scaleHandle( windowRect.width/contentRect.width );
 				_scrollBounds.width = _track.width - _handle.width;
 			break;
 			case VERTICAL:
+				if( contentRect.height == 0 ) break;
 				scaleHandle(windowRect.height/contentRect.height);
 				_scrollBounds.height = _track.height - _handle.height;
 			break;
@@ -75,7 +76,7 @@ public class ScrollBar extends Sprite {
 	
 	protected function scaleHandle(scale:Number):void
 	{
-		
+		//make sure to override this if you want it to do something
 	}
 	
 	private function handleDragStart( e:MouseEvent ):void

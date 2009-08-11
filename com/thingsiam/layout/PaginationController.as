@@ -1,11 +1,11 @@
 package com.thingsiam.layout {
 
+import com.thingsiam.display.BasicButton;
+
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.events.MouseEvent;
 import flash.events.EventDispatcher;
-
-import com.thingsiam.display.BasicButton;
+import flash.events.MouseEvent;
 
 public class PaginationController extends Sprite {
 	
@@ -20,7 +20,8 @@ public class PaginationController extends Sprite {
 	
 	private function init():void
 	{
-		_paginator.addEventListener( Paginator.RESIZE, handleResize, false, 0, true );
+		_paginator.addEventListener( Paginator.SIZE_CHANGE, handleResize, false, 0, true );
+		_paginator.addEventListener( Paginator.PAGECOUNT_CHANGE, handleResize, false, 0, true );
 		_paginator.addEventListener( Paginator.TURN, handleTurn, false, 0, true );
 	}
 	

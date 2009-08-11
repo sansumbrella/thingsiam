@@ -1,10 +1,11 @@
 package com.thingsiam.layout {
 
-import flash.display.Sprite;
-import flash.display.DisplayObject;
-import flash.events.Event;
-
 import com.thingsiam.iterators.*;
+
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.geom.Rectangle;
 
 public class Paginator extends Sprite {
 	
@@ -15,7 +16,8 @@ public class Paginator extends Sprite {
 	protected var _layoutParameters:Object;
 	protected var _wrapEnd:Boolean = false;
 	
-	public static const RESIZE:String="resize";
+	public static const PAGECOUNT_CHANGE:String="countChange";
+	public static const SIZE_CHANGE:String="sizeChange";
 	public static const TURN:String="pageTurn";
 	
 	public function Paginator( args:Object )
@@ -85,6 +87,11 @@ public class Paginator extends Sprite {
 		return id;
 	}
 	
+	public function getPageRect():Rectangle
+	{
+		return _pages[0].getRect(_pages[0]);
+	}
+	
 	//
 	//
 	//
@@ -96,12 +103,13 @@ public class Paginator extends Sprite {
 			addPage();
 			push(item);
 		}
+		dispatchEvent( new Event(SIZE_CHANGE) );	//announce possible change in size 
 	}
 	
 	protected function addPage():void
 	{
 		_pages.push( new _layoutType(_layoutParameters) );
-		dispatchEvent( new Event(RESIZE) );	//announce change in size
+		dispatchEvent( new Event(PAGECOUNT_CHANGE) );	//announce change in pagecount
 	}
 	
 	public function dump():void
@@ -114,7 +122,7 @@ public class Paginator extends Sprite {
 		_pages = new Array();
 		addPage();
 		requestPage(0);
-		dispatchEvent( new Event(RESIZE) );
+		dispatchEvent( new Event(PAGECOUNT_CHANGE) );
 	}
 	
 	public function get pageCount():int{
