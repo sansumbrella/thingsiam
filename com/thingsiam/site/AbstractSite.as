@@ -1,14 +1,13 @@
 package com.thingsiam.site {
 
-import flash.display.Sprite;
-import flash.events.Event;
-
-import com.thingsiam.loading.BasicPreloader;
 import com.thingsiam.layout.ScreenModel;
-
+import com.thingsiam.loading.BasicPreloader;
+import com.thingsiam.site.controllers.NavigationController;
 import com.thingsiam.site.events.SiteEvent;
 import com.thingsiam.site.model.SiteModel;
-import com.thingsiam.site.controllers.NavigationController;
+
+import flash.display.Sprite;
+import flash.events.Event;
 
 public class AbstractSite extends Sprite {
 	
@@ -18,7 +17,6 @@ public class AbstractSite extends Sprite {
 	
 	protected var _navigation:NavigationController;
 	protected var _preloader:BasicPreloader;
-	protected var _screen:ScreenModel;
 	protected var _pageDepth:int = 0;
 	private var _ready	:Boolean = true;
 	
@@ -30,7 +28,8 @@ public class AbstractSite extends Sprite {
 	
 	private function init():void
 	{
-		_screen = new ScreenModel(this.stage, 1024, 768);
+		ScreenModel.instance.init( stage );
+		
 		_preloader = new BasicPreloader();
 		model.addEventListener( Event.CHANGE, handleModelChange );
 	}
