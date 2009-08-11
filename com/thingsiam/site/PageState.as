@@ -19,10 +19,10 @@ public class PageState extends Sprite {
 		super();
 	}
 	
-	public function show():void
+	public final function show():void
 	{
 		_hidden = false;
-		handleShown();
+		playShowTransition();
 	}
 	
 	public final function hide():void
@@ -34,6 +34,11 @@ public class PageState extends Sprite {
 		{
 			playHideTransition();
 		}
+	}
+	
+	protected function playShowTransition():void
+	{
+		handleShown();
 	}
 	
 	protected function playHideTransition():void

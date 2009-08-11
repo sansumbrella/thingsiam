@@ -1,7 +1,7 @@
 package com.thingsiam.layout {
 
-import flash.display.Sprite;
 import flash.display.DisplayObject;
+import flash.display.Sprite;
 
 public class LayoutArray extends Sprite {
 	
@@ -16,7 +16,7 @@ public class LayoutArray extends Sprite {
 	
 	public function pushGroup( ... items ):void
 	{
-		for each( var item in items )
+		for each( var item:DisplayObject in items )
 		{
 			push(item);
 		}
@@ -24,6 +24,9 @@ public class LayoutArray extends Sprite {
 	
 	public function push(item:DisplayObject):Boolean
 	{
+		if( numChildren >= _maxElements ){
+			return false;
+		}
 		addChild(item);
 		return true;
 	}

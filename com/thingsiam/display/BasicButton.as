@@ -8,15 +8,17 @@ package com.thingsiam.display {
 	*	State management is on the way
 	*/
 	
-	import flash.display.Sprite;
+	import com.thingsiam.events.ButtonEvent;
+	
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	public class BasicButton extends Sprite {
 		
 		protected var _state:String;
+		//id is useful for arrays of buttons that do roughly the same thing
 		protected var _id:int = 0;
 		
 		public function BasicButton(){
@@ -59,6 +61,7 @@ package com.thingsiam.display {
 		}
 		
 		private function handleClickEvent( e:Event ) : void {
+			dispatchEvent( new ButtonEvent(ButtonEvent.CLICK, id ) );
 			handleClick();
 		}
 		

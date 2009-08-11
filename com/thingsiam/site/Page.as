@@ -18,9 +18,9 @@ public class Page extends PageState {
 	protected var 	_stateDepth:int = 0;
 	protected var 	_url:String;	//the address of the page
 	protected var 	_model:PageModel;
-	protected var 	_currentState:PageState,
-					_nextState:PageState,
-					_possibleStates:Dictionary;
+	protected var 	_currentState:PageState;
+	protected var	_nextState:PageState;
+	protected var	_possibleStates:Dictionary;
 	
 	public function Page()
 	{
