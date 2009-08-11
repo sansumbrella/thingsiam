@@ -1,10 +1,10 @@
 package com.thingsiam.site {
 
-import flash.display.Sprite;
-import flash.geom.Rectangle;
-import flash.events.Event;
-
 import com.thingsiam.site.events.SiteEvent;
+
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.geom.Rectangle;
 
 public class PageState extends Sprite {
 	

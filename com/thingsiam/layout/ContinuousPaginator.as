@@ -19,8 +19,8 @@ public class ContinuousPaginator extends Paginator {
 	private var _screen:Rectangle;
 	
 	public static const SCROLL:String = "paginatorScroll";
-	private var _scrollAttraction:Number = 0.15;
-	private var _snapAttraction:Number = 0.08;
+	private var _scrollAttraction:Number = 0.18;
+	private var _snapAttraction:Number = 0.09;
 	
 	public function ContinuousPaginator(args:Object)
 	{
