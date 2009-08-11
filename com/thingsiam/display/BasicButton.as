@@ -8,8 +8,6 @@ package com.thingsiam.display {
 	*	State management is on the way
 	*/
 	
-	import com.thingsiam.events.ButtonEvent;
-	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -61,7 +59,6 @@ package com.thingsiam.display {
 		}
 		
 		private function handleClickEvent( e:Event ) : void {
-			dispatchEvent( new ButtonEvent(ButtonEvent.CLICK, id ) );
 			handleClick();
 		}
 		

@@ -48,6 +48,7 @@ public class Page extends PageState {
 	
 	protected function updateView( e:Event ):void
 	{
+		trace("Updating view: ", this, _model.section ); 
 		_nextState = _possibleStates[_model.section];
 		transitionToState();
 	}
