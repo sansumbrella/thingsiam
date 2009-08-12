@@ -1,10 +1,11 @@
 package com.thingsiam.animation {
 
 import com.thingsiam.math.Numbers;
-import flash.utils.Timer;
+
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.TimerEvent;
+import flash.utils.Timer;
 
 public class Integrator extends EventDispatcher {
 	
@@ -21,7 +22,8 @@ public class Integrator extends EventDispatcher {
 	private var _timer:Timer;
 	public var	vel:Number = 0;
 	public var	attraction:Number = 0.2;
-	private var minStep:Number = 0.01;
+	public var minStep:Number = 0.01;
+//	public var maxStep:Number = Infinity; //debating adding this, probably not a noticeable performance change
 	
 	public function Integrator( value:Number = 0, target:Number = 0 )
 	{
@@ -39,6 +41,7 @@ public class Integrator extends EventDispatcher {
 		if( isChanging )
 		{
 			vel = ( target - value )*attraction;
+//			vel = Numbers.limit( vel, maxStep );
 			value += vel;
 		} else {
 			value = target;
