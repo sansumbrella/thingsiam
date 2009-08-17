@@ -20,11 +20,11 @@ public class Paginator extends Sprite {
 	public static const SIZE_CHANGE:String="sizeChange";
 	public static const TURN:String="pageTurn";
 	
-	public function Paginator( args:Object )
+	public function Paginator( layout:Class, args:Object )
 	{
 		super();
-		_layoutType =  		args.hasOwnProperty("type") ? args.type : ColumnArray;
-		_layoutParameters = args.hasOwnProperty("params") ? args.params : {margin:5};
+		_layoutType =  		layout;
+		_layoutParameters = args;
 		init();
 	}
 	

@@ -1,10 +1,9 @@
 package com.thingsiam.layout {
 
-import flash.display.Sprite;
+import com.thingsiam.animation.Integrator;
+
 import flash.events.Event;
 import flash.geom.Rectangle;
-
-import com.thingsiam.animation.Integrator;
 
 public class ContinuousPaginator extends Paginator {
 	
@@ -22,10 +21,10 @@ public class ContinuousPaginator extends Paginator {
 	private var _scrollAttraction:Number = 0.18;
 	private var _snapAttraction:Number = 0.09;
 	
-	public function ContinuousPaginator(args:Object)
+	public function ContinuousPaginator( layout:Class, args:Object)
 	{
 		init();
-		super(args);
+		super( layout, args);
 	}
 	
 	private function init():void
