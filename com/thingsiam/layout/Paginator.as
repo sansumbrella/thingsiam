@@ -92,6 +92,20 @@ public class Paginator extends Sprite {
 		return _pages[0].getRect(_pages[0]);
 	}
 	
+	public function changeLayout( layout:Class, params:Object )
+	{
+		_layoutType = layout;
+		_layoutParameters = params;
+		
+		_pages.forEach( storeInArray );
+		trace("Layout not changed. Still need to implement the paginator method.");
+	}
+	
+	private function storeInArray( obj:LayoutArray ):void
+	{
+		
+	}
+	
 	//
 	//
 	//

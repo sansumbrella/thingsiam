@@ -11,7 +11,7 @@ public class ContinuousPaginator extends Paginator {
 	/**
 	*	Lays out pages horizontally
 	*	Bolts on a RowArray to the existing Paginator and adds scrolling navigation functions
-	*	Will do rows/grids eventually, but I'm on a deadline right now
+	*	May do rows/grids eventually, but I'm on a deadline right now
 	*/
 	
 	private var _integrator:Integrator;
