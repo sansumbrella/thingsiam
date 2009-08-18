@@ -1,15 +1,13 @@
 package com.thingsiam.site.model {
 
-import flash.events.EventDispatcher;
 import flash.events.Event;
+import flash.events.EventDispatcher;
 
 public class PageModel extends EventDispatcher {
 	
 	protected var 	_states				:Array;
-	protected var 	_currentState		:String,
-					_currentSection		:String, //first component of state
-					_currentSubsection	:String, //remaining components of state
-					_fragments			:Array;
+	protected var 	_currentState		:String;
+	protected var	_fragments			:Array;
 	public static const INDEX:String = "index";								
 	
 	public function PageModel()
@@ -44,6 +42,10 @@ public class PageModel extends EventDispatcher {
 		dispatchEvent( new Event(Event.CHANGE) );
 	}
 	
+	//
+	//	Accessors
+	//
+	
 	public function get state():String{
 		return _currentState;
 	}
@@ -52,9 +54,33 @@ public class PageModel extends EventDispatcher {
 		return _currentSection;
 	}
 	
-	public function get subsection():String{
-		return _currentSubsection;
+	
+	// use fragments in controller to pass on fragmentsAfter the current section to child models 
+	
+	public function getFragment(index:int):String
+	{
+		return _fragments[index];
 	}
+	
+	public function getFragmentsAfterIndex(index:int):String
+	{
+		if( _fragments.length <= index )
+		{
+			return "";	
+		}
+		return _fragments.slice(index+1).join("/");
+	}
+	
+	public function getFragmentsAfter(fragment:String):String
+	{
+		return getFragmentsAfterIndex(_fragments.indexOf(fragment));
+	}
+	
+	public function get numFragments():int
+	{
+		return _fragments.length;
+	}
+	
 }
 
 }
