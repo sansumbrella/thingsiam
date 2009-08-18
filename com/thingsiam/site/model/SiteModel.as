@@ -56,7 +56,6 @@ public class SiteModel extends EventDispatcher {
 	
 	public function setState( page:String, section:String="" ):void
 	{
-		trace("Set state: ", page, section, _currentPage, _currentSection );
 		if( _currentPage == page && _currentSection == section )
 		{
 			return;
