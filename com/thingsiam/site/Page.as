@@ -44,12 +44,12 @@ public class Page extends PageState {
 			throw new Error("Page _model is not yet defined. Make sure to initialize it in the subclass.");
 		}
 		_model.setState(name, force);
+//		trace("Page::setState to ", name);
 	}
 	
 	protected function updateView( e:Event ):void
 	{
-//		trace("Updating view: ", this, _model.section ); 
-		_nextState = _possibleStates[_model.section];
+		_nextState = _possibleStates[_model.getFragment(0)];
 		transitionToState();
 	}
 	
@@ -79,7 +79,8 @@ public class Page extends PageState {
 		_currentState = _nextState;
 		addChildAt( _currentState, _stateDepth );
 		_currentState.addEventListener( SiteEvent.PAGE_SHOWN, handleStateShown, false, 0, true );
-		_currentState.setState(_model.subsection);
+		//this will traverse down through the child hierarchy until a Page is reached that has no states beneath it, or the next PageState isn't a Page
+		_currentState.setState(_model.getFragmentsAfterIndex(0));
 		_currentState.show();
 	}
 	

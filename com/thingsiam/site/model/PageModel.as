@@ -30,15 +30,6 @@ public class PageModel extends EventDispatcher {
 		
 		_currentState = state;
 		_fragments = _currentState.split("/");
-		_currentSection = _fragments[0];
-		_currentSubsection = "";
-		if( _fragments.length > 1 )
-		{
-			for( var i:int=1; i!=_fragments.length; i++ )
-			{
-				_currentSubsection += _fragments[i] + "/";
-			}
-		}
 		dispatchEvent( new Event(Event.CHANGE) );
 	}
 	
@@ -49,11 +40,6 @@ public class PageModel extends EventDispatcher {
 	public function get state():String{
 		return _currentState;
 	}
-	
-	public function get section():String{
-		return _currentSection;
-	}
-	
 	
 	// use fragments in controller to pass on fragmentsAfter the current section to child models 
 	
