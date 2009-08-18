@@ -139,6 +139,7 @@ public class AbstractSite extends Sprite {
 		_ready = value;
 		if( _ready )
 		{
+//			trace("navigate to ", model.page, model.section);
 			navigateTo(model.page, model.section);
 		}
 	}

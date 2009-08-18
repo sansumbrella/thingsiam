@@ -14,6 +14,7 @@ public class SiteModel extends EventDispatcher {
 	private var _currentSection:String;
 	private var _currentPage:String;
 	private var _launchFunction:Function;
+	private var _defaultPage:String;
 	
 	public function SiteModel( l:Lock )
 	{
@@ -55,6 +56,7 @@ public class SiteModel extends EventDispatcher {
 	
 	public function setState( page:String, section:String="" ):void
 	{
+		trace("Set state: ", page, section, _currentPage, _currentSection );
 		if( _currentPage == page && _currentSection == section )
 		{
 			return;
@@ -90,6 +92,7 @@ public class SiteModel extends EventDispatcher {
 	*/
 	
 	public function get page():String{
+		if( _currentPage == null ) _currentPage = _defaultPage;
 		return _currentPage;
 	}
 	
@@ -139,6 +142,10 @@ public class SiteModel extends EventDispatcher {
 	
 	public function set launchFunction(value:Function):void {
 		_launchFunction = value;
+	}
+	
+	public function set defaultPage(value:String):void{
+		_defaultPage = value;
 	}
 	
 }
