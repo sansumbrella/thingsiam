@@ -1,11 +1,9 @@
 package com.thingsiam.site {
 
-import flash.display.Sprite;
-import flash.events.Event;
-
 import com.thingsiam.site.events.SiteEvent;
 import com.thingsiam.site.model.PageModel;
-import com.thingsiam.site.PageState;
+
+import flash.events.Event;
 import flash.utils.Dictionary;
 
 public class Page extends PageState {
@@ -86,7 +84,7 @@ public class Page extends PageState {
 	
 	protected function handleStateShown(e:Event):void
 	{
-		
+		_currentState.removeEventListener( SiteEvent.PAGE_SHOWN, handleStateShown );
 	}
 	
 	protected function setModel( model:PageModel ):void
@@ -97,6 +95,30 @@ public class Page extends PageState {
 		}
 		_model = model;
 		_model.addEventListener( Event.CHANGE, updateView, false, 0, true );
+	}
+	
+	override protected function playHideTransition():void
+	{
+		if( _currentState )
+		{
+			_currentState.addEventListener( SiteEvent.PAGE_HIDDEN, handleHidden );
+			_currentState.hide();
+		} else
+		{
+			handleHidden();
+		}
+	}
+	
+	override protected function playShowTransition():void
+	{
+		if( _currentState )
+		{
+			_currentState.addEventListener( SiteEvent.PAGE_SHOWN, handleShown );
+			_currentState.show();
+		} else
+		{
+			handleShown();
+		}
 	}
 	
 	/*

@@ -4,6 +4,7 @@ import com.thingsiam.site.events.SiteEvent;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.EventDispatcher;
 import flash.geom.Rectangle;
 
 public class PageState extends Sprite {
@@ -27,7 +28,7 @@ public class PageState extends Sprite {
 	
 	public final function hide():void
 	{
-		if(_hidden)
+		if(_hidden == true)
 		{
 			handleHidden();
 		} else
@@ -58,12 +59,20 @@ public class PageState extends Sprite {
 	
 	protected function handleShown(e:Event=null):void
 	{
+		if( e != null )
+		{
+			(e.target as EventDispatcher).removeEventListener(SiteEvent.PAGE_SHOWN, handleShown);
+		}
 		dispatchEvent( new Event( SiteEvent.PAGE_SHOWN ));
 	}
 	
 	protected function handleHidden(e:Event=null):void
 	{
 		_hidden = true;
+		if( e != null )
+		{
+			(e.target as EventDispatcher).removeEventListener(SiteEvent.PAGE_HIDDEN, handleHidden);
+		}
 		dispatchEvent( new Event( SiteEvent.PAGE_HIDDEN ));
 	}
 }
