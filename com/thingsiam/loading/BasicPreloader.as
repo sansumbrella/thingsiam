@@ -71,7 +71,7 @@ package com.thingsiam.loading {
 		}
 		
 		public function set view(value:DisplayObject):void {
-			if( !(value is IProgressIndicator) ) throw new Error("Preloader view must implement IProgressIndicator. The getter/setter cast to DisplayObject for your convenience.");
+			if( !(value is IProgressIndicator) ) throw new Error("Preloader view must implement IProgressIndicator. The cast to DisplayObject inside the getter/setter is for your convenience.");
 			_view = value as IProgressIndicator;
 		}
 		

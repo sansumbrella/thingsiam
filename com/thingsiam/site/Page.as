@@ -105,7 +105,7 @@ public class Page extends PageState {
 			_currentState.hide();
 		} else
 		{
-			handleHidden();
+			super.playHideTransition();
 		}
 	}
 	
@@ -117,7 +117,7 @@ public class Page extends PageState {
 			_currentState.show();
 		} else
 		{
-			handleShown();
+			super.playShowTransition();
 		}
 	}
 	

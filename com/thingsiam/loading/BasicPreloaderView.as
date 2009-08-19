@@ -1,7 +1,7 @@
 package com.thingsiam.loading {
 
-import flash.display.Sprite;
 import flash.display.Shape;
+import flash.display.Sprite;
 
 public class BasicPreloaderView extends Sprite implements IProgressIndicator {
 	

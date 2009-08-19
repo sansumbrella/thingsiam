@@ -7,6 +7,9 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.geom.Rectangle;
 
+import gs.TweenLite;
+import gs.easing.Quad;
+
 public class PageState extends Sprite {
 	
 	/**
@@ -39,12 +42,13 @@ public class PageState extends Sprite {
 	
 	protected function playShowTransition():void
 	{
-		handleShown();
+		alpha = 0;
+		new TweenLite( this, 1.25, { alpha:1, onComplete:handleShown, ease:Quad.easeInOut } );
 	}
 	
 	protected function playHideTransition():void
 	{	//do what you want in here
-		handleHidden();
+		new TweenLite( this, 0.6, { alpha:0, onComplete:handleHidden, ease:Quad.easeIn } );
 	}
 	
 	public function setState(state:String, force:Boolean=false):void
