@@ -57,15 +57,11 @@ public class AbstractSite extends Sprite {
 			{			
 				_nextPage = PageCache.instance.retrieve( page );
 				_requestedSection = section;
-				if( _nextPage )
-				{
-					transitionToPage();
-				} else
-				{
-					PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
-					_preloader.observe( PageCache.instance );
-					addChild(_preloader.view);
+				if( !_nextPage )
+				{	//the cache is loading the content
+					PageCache.instance.addEventListener( SiteEvent.PAGE_LOADED, handlePageLoaded );
 				}
+				transitionToPage();
 			} else 
 			{	//if you want to handle the 404, listen for this event
 				dispatchEvent( new SiteEvent(SiteEvent.PAGE_NOT_FOUND, page ));
@@ -73,14 +69,8 @@ public class AbstractSite extends Sprite {
 		}
 	}
 	
-	private function transitionToPage( e:SiteEvent = null ):void
+	private function transitionToPage():void
 	{
-		if( e != null )
-		{	//we just completed loading the page
-			PageCache.instance.removeEventListener( SiteEvent.PAGE_LOADED, transitionToPage );
-			_nextPage = PageCache.instance.retrieve( e.pageName );
-		}
-		
 		if( _currentPage != null && _currentPage != _nextPage )
 		{	//transition out, and transition in afterwards
 			_currentPage.addEventListener( SiteEvent.PAGE_HIDDEN, displayNextPage, false, 0, true );
@@ -88,11 +78,29 @@ public class AbstractSite extends Sprite {
 		} else
 		{	//just transition in
 			displayNextPage();
-		}
+		}		
+	}
+	
+	private function displayPreloader():void
+	{
+		_preloader.observe( PageCache.instance );
+		addChild(_preloader.view);
 	}
 	
 	private function displayNextPage(e:Event = null):void
-	{
+	{	
+		if( PageCache.instance.loading )
+		{	//animation finished, but loading hasn't
+			displayPreloader();
+			return;
+		}
+		
+		if( _currentPage != null && _currentPage.animating )
+		{
+			//the loading has finished, but animation hasn't
+			return;
+		}
+		
 		if( _currentPage != _nextPage )
 		{	
 			if( _currentPage != null )
@@ -121,6 +129,13 @@ public class AbstractSite extends Sprite {
 		_currentPage.removeEventListener( SiteEvent.PAGE_SHOWN, handlePageShown );
 		_currentPage.setState(_requestedSection);
 		dispatchEvent( new SiteEvent(SiteEvent.TRANSITION_END, _currentPage.url ));
+	}
+	
+	private function handlePageLoaded(e:SiteEvent):void
+	{
+		PageCache.instance.removeEventListener( SiteEvent.PAGE_LOADED, handlePageLoaded );
+		_nextPage = PageCache.instance.retrieve( e.pageName );
+		displayNextPage();
 	}
 	
 	/*
