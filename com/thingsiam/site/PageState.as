@@ -1,11 +1,11 @@
 package com.thingsiam.site {
 
+import com.thingsiam.layout.ScreenModel;
 import com.thingsiam.site.events.SiteEvent;
 
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.EventDispatcher;
-import flash.geom.Rectangle;
 
 import gs.TweenLite;
 import gs.easing.Quad;
@@ -28,11 +28,14 @@ public class PageState extends Sprite {
 	{
 		_hidden = false;
 		_animating = true;
+		ScreenModel.instance.addEventListener(Event.CHANGE, handleResize);
+		updateLayout();
 		playShowTransition();
 	}
 	
 	public final function hide():void
 	{
+		ScreenModel.instance.removeEventListener(Event.CHANGE, handleResize);
 		_animating = true;
 		if(_hidden == true)
 		{
@@ -44,13 +47,13 @@ public class PageState extends Sprite {
 	}
 	
 	protected function playShowTransition():void
-	{
+	{	//override to do whatever, call handleShown when you're done
 		alpha = 0;
 		new TweenLite( this, 1.25, { alpha:1, onComplete:handleShown, ease:Quad.easeInOut } );
 	}
 	
 	protected function playHideTransition():void
-	{	//do what you want in here
+	{	//do what you want in here, call handleHidden when you're done
 		new TweenLite( this, 0.6, { alpha:0, onComplete:handleHidden, ease:Quad.easeIn } );
 	}
 	
@@ -59,9 +62,13 @@ public class PageState extends Sprite {
 		
 	}
 	
-	public function resize( rect:Rectangle ):void
+	protected function handleResize( e:Event ):void
 	{
-		
+		updateLayout();
+	}
+	
+	public function updateLayout():void
+	{	//does nothing by default, do what you want
 	}
 	
 	protected final function handleShown(e:Event=null):void
