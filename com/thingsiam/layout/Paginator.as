@@ -151,6 +151,14 @@ public class Paginator extends Sprite {
 		return _wrapEnd;
 	}
 	
+	public function get currentPage():LayoutArray{
+		return _currentPage;
+	}
+	
+	public function itemWidth(index:int):Number{
+		return _currentPage.itemWidth(index);
+	}
+	
 	public function set wrapEnd(value:Boolean):void {
 		_wrapEnd = value;
 	}

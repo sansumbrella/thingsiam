@@ -86,6 +86,13 @@ public class LayoutArray extends Sprite {
 	{
 		while( numChildren != 0 ) removeChildAt( 0 );
 	}
+	
+	public function itemWidth(index:int):Number{
+		if( index < numChildren )
+			return getChildAt(index).width;
+		else
+			return 0;
+	}
 }
 
 }

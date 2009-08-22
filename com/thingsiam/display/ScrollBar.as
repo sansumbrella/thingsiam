@@ -62,13 +62,28 @@ public class ScrollBar extends Sprite {
 			case HORIZONTAL:
 				if( contentRect.width == 0 ) break;
 				scaleHandle( windowRect.width/contentRect.width );
-				_scrollBounds.width = _track.width - _handle.width;
 			break;
 			case VERTICAL:
 				if( contentRect.height == 0 ) break;
 				scaleHandle(windowRect.height/contentRect.height);
-				_scrollBounds.height = _track.height - _handle.height;
 			break;
+			default:
+			break;
+		}
+		
+		updateScrollBounds();
+	}
+	
+	protected function updateScrollBounds():void
+	{
+		switch(_orientation)
+		{
+			case HORIZONTAL:
+				_scrollBounds.width = _track.width - _handle.width;
+				break;
+			case VERTICAL:
+				_scrollBounds.height = _track.height - _handle.height;
+				break;
 			default:
 			break;
 		}
