@@ -8,7 +8,7 @@ public class PageModel extends EventDispatcher {
 	protected var 	_states				:Array;
 	protected var 	_currentState		:String;
 	protected var	_fragments			:Array;
-	public static const INDEX:String = "index";								
+	public static const INDEX:String = "";								
 	
 	public function PageModel()
 	{

@@ -42,13 +42,15 @@ public class Page extends PageState {
 			throw new Error("Page _model is not yet defined. Make sure to initialize it in the subclass.");
 		}
 		_model.setState(name, force);
-//		trace("Page::setState to ", name);
 	}
 	
 	protected function updateView( e:Event ):void
 	{
 		_nextState = _possibleStates[_model.getFragment(0)];
-		transitionToState();
+		if(_nextState != null )
+		{
+			transitionToState();
+		}
 	}
 	
 	protected function transitionToState():void
@@ -73,6 +75,8 @@ public class Page extends PageState {
 				removeChild( _currentState );
 			}
 		}
+		trace("Page::displayNextState", this, _nextState);
+		
 		//swap over to the next page
 		_currentState = _nextState;
 		addChildAt( _currentState, _stateDepth );

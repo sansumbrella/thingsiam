@@ -17,6 +17,7 @@ public class PageState extends Sprite {
 	*	
 	*/
 	protected var _hidden:Boolean = true;
+	protected var _shown:Boolean = false;
 	private var _animating:Boolean = false;
 	
 	public function PageState()
@@ -26,17 +27,24 @@ public class PageState extends Sprite {
 	
 	public final function show():void
 	{
-		_hidden = false;
-		_animating = true;
-		ScreenModel.instance.addEventListener(Event.CHANGE, handleResize);
-		updateLayout();
-		playShowTransition();
+		if( !_shown )
+		{
+			_hidden = false;
+			_animating = true;
+			ScreenModel.instance.addEventListener(Event.CHANGE, handleResize);
+			updateLayout();
+			playShowTransition();
+		} else
+		{
+			handleShown();
+		}
 	}
 	
 	public final function hide():void
 	{
 		ScreenModel.instance.removeEventListener(Event.CHANGE, handleResize);
 		_animating = true;
+		_shown = false;
 		if(_hidden == true)
 		{
 			handleHidden();
@@ -74,6 +82,7 @@ public class PageState extends Sprite {
 	protected final function handleShown(e:Event=null):void
 	{
 		_animating = false;
+		_shown = true;
 		if( e != null )
 		{
 			(e.target as EventDispatcher).removeEventListener(SiteEvent.PAGE_SHOWN, handleShown);
