@@ -75,7 +75,6 @@ public class Page extends PageState {
 				removeChild( _currentState );
 			}
 		}
-		trace("Page::displayNextState", this, _nextState);
 		
 		//swap over to the next page
 		_currentState = _nextState;
