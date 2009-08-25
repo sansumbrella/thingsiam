@@ -65,11 +65,6 @@ public class ColumnArray extends LayoutArray {
 	
 	override public function push( item:DisplayObject ):Boolean
 	{
-		if( numChildren == _maxElements )
-		{
-			return false;
-		}
-			
 		if( numChildren != 0 )
 		{
 			item.y = bottom + margin;
@@ -78,8 +73,7 @@ public class ColumnArray extends LayoutArray {
 			item.y = 0;
 		}
 		
-		addChild( item );
-		return true;
+		return super.push(item);
 	}
 	
 	public function get bottom():Number{

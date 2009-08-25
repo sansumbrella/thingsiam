@@ -32,7 +32,7 @@ public class ContinuousPaginator extends Paginator {
 		_integrator = new Integrator(0,0);
 		_integrator.addEventListener( Integrator.UPDATE, handleUpdate, false, 0, true );
 		
-		_pageRow = new RowArray({margin:100});
+		_pageRow = new RowArray({margin:10});
 		_screen = new Rectangle( 0, 0, 960, 600 );
 		
 		addChild(_pageRow);

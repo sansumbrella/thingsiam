@@ -37,10 +37,6 @@ public class GridArray extends LayoutArray {
 	
 	override public function push(item:DisplayObject):Boolean
 	{
-		if( numChildren == _maxElements )
-		{
-			return false;
-		}
 		if( numChildren != 0 )
 		{
 			item.x = _currentColumn * _columnSize + _marginX;
@@ -54,8 +50,7 @@ public class GridArray extends LayoutArray {
 			_currentRow++;
 		}
 		
-		addChild(item);
-		return true;
+		return super.push(item);
 	}
 	
 	public function get last():DisplayObject{

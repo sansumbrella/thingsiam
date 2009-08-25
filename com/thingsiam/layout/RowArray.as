@@ -1,7 +1,7 @@
 package com.thingsiam.layout {
 
-import flash.display.Sprite;
 import flash.display.DisplayObject;
+import flash.geom.Rectangle;
 
 /**
 *	Keeps objects arranged in a row	
@@ -43,12 +43,16 @@ public class RowArray extends LayoutArray {
 	{
 		var xPos:Number = 0;
 		
+		//left-to-right
+		
 		for( var i:int=0; i != numChildren; i++ )
 		{
 			var d:DisplayObject = getChildAt(i);
 			d.x = xPos;
-			xPos += d.width + _margin;
+//			var rect:Rectangle = d.getBounds( d );			
+			xPos += d.width + _margin;	//get the right edge
 		}
+		//right-to-left
 	}
 	
 	public function get first() : DisplayObject 
@@ -77,18 +81,13 @@ public class RowArray extends LayoutArray {
 	
 	override public function push( item:DisplayObject ):Boolean
 	{
-		if( numChildren == _maxElements )
-		{
-			return false;
-		}
 		if( numChildren != 0 )
 		{
 			item.x = right + _margin;
 		} 
 		else item.x = 0;
 		
-		addChild( item );
-		return true;
+		return super.push(item);
 	}
 	
 	public function insertAt( item:DisplayObject, level:int ):void

@@ -5,13 +5,14 @@ import flash.display.Sprite;
 
 public class LayoutArray extends Sprite {
 	
-	protected var _maxElements:int = -1; // Number of elements allowed in this layout, -1 = infinity
+	public static const UNLIMITED:int = -1;
+	protected var _maxElements:int = UNLIMITED; // Number of elements allowed in this layout
 	
 	public function LayoutArray( args:Object=null )
 	{
 		super();
 		if( args == null ) args = {};
-		_maxElements = args.hasOwnProperty("maxElements") ? args.maxElements : -1;
+		_maxElements = args.hasOwnProperty("maxElements") ? args.maxElements : UNLIMITED;
 	}
 	
 	public function pushGroup( ... items ):void
@@ -24,10 +25,11 @@ public class LayoutArray extends Sprite {
 	
 	public function push(item:DisplayObject):Boolean
 	{
-		if( numChildren >= _maxElements ){
+		if( numChildren == _maxElements ){
 			return false;
 		}
 		addChild(item);
+		item.addEventListener( LayoutEvent.RESIZE, handleItemResize );
 		return true;
 	}
 	
@@ -59,6 +61,11 @@ public class LayoutArray extends Sprite {
 		}
 	}
 	
+	private function handleItemResize(e:LayoutEvent):void
+	{	//reposition stuff
+		cleanup();
+	}
+	
 	public function cleanup():void
 	{
 		
@@ -84,7 +91,10 @@ public class LayoutArray extends Sprite {
 	
 	public function dump() : void 
 	{
-		while( numChildren != 0 ) removeChildAt( 0 );
+		while( numChildren != 0 )
+		{
+			removeChildAt( 0 ).removeEventListener( LayoutEvent.RESIZE, handleItemResize );
+		}
 	}
 	
 	public function itemWidth(index:int):Number{
