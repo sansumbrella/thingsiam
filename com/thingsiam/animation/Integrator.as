@@ -1,7 +1,5 @@
 package com.thingsiam.animation {
 
-import com.thingsiam.math.Numbers;
-
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.TimerEvent;
@@ -16,6 +14,7 @@ public class Integrator extends EventDispatcher {
 	*/
 	
 	public static const UPDATE:String = "integratorUpdate";
+	public static const COMPLETE:String = "integratorStopped";
 	
 	private var	_target:Number;
 	private var	_value:Number;
@@ -43,13 +42,14 @@ public class Integrator extends EventDispatcher {
 			vel = ( target - value )*attraction;
 //			vel = Numbers.limit( vel, maxStep );
 			value += vel;
+			dispatchEvent( new Event(UPDATE) );
 		} else {
 			value = target;
 			_timer.reset();
 			_timer.removeEventListener( TimerEvent.TIMER, update );
+			dispatchEvent( new Event(COMPLETE) );
 		}
 		
-		dispatchEvent( new Event(UPDATE) );
 	}
 	
 	public function get isChanging():Boolean{

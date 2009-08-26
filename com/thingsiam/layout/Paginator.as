@@ -167,6 +167,14 @@ public class Paginator extends Sprite {
 	//	Layout function wrappers
 	//
 	
+	public function forEachPage(fn:Function):void
+	{
+		for each( var p:LayoutArray in _pages )
+		{
+			fn(p);
+		}
+	}
+	
 	public function forEachWithIndex(fn:Function):void
 	{
 		_currentPage.forEachWithIndex(fn);

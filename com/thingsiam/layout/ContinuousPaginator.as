@@ -2,6 +2,7 @@ package com.thingsiam.layout {
 
 import com.thingsiam.animation.Integrator;
 
+import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.geom.Rectangle;
 
@@ -18,6 +19,7 @@ public class ContinuousPaginator extends Paginator {
 	private var _screen:Rectangle;
 	
 	public static const SCROLL:String = "paginatorScroll";
+	public static const SCROLL_COMPLETE:String = "paginatorScrollComplete";
 	private var _scrollAttraction:Number = 0.18;
 	private var _snapAttraction:Number = 0.09;
 	
@@ -31,11 +33,17 @@ public class ContinuousPaginator extends Paginator {
 	{
 		_integrator = new Integrator(0,0);
 		_integrator.addEventListener( Integrator.UPDATE, handleUpdate, false, 0, true );
+		_integrator.addEventListener( Integrator.COMPLETE, handleComplete, false, 0, true );
 		
 		_pageRow = new RowArray({margin:10});
 		_screen = new Rectangle( 0, 0, 960, 600 );
 		
 		addChild(_pageRow);
+	}
+	
+	private function handleComplete(e:Event):void
+	{
+		dispatchEvent( new Event(SCROLL_COMPLETE) );
 	}
 	
 	private function handleUpdate(e:Event):void
@@ -56,11 +64,24 @@ public class ContinuousPaginator extends Paginator {
 		_integrator.attraction = _scrollAttraction;
 	}
 	
+	public function scrollTo( page:* ):void
+	{
+		for( var i:int=0; i != _pages.length; i++ )
+		{
+			if( _pages[i] == page )
+			{
+				setPage(i);
+				trace("Continuous Paginator scrolling to: ", i );
+				return;
+			}
+		}
+	}
+	
 	override protected function setPage(id:int):void
 	{
 		_currentPage = _pages[id];
 		_currentIndex = id;
-		//move towards page
+		//center on the target page
 		_integrator.target = -_currentPage.x - _currentPage.width/2;
 		//handle this event to animate the page change
 		dispatchEvent( new Event(TURN) );
