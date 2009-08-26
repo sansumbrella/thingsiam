@@ -61,7 +61,7 @@ public class ContinuousPaginator extends Paginator {
 		_currentPage = _pages[id];
 		_currentIndex = id;
 		//move towards page
-		_integrator.target = -_currentPage.x;
+		_integrator.target = -_currentPage.x - _currentPage.width/2;
 		//handle this event to animate the page change
 		dispatchEvent( new Event(TURN) );
 	}

@@ -49,7 +49,6 @@ public class RowArray extends LayoutArray {
 		{
 			var d:DisplayObject = getChildAt(i);
 			d.x = xPos;
-//			var rect:Rectangle = d.getBounds( d );			
 			xPos += d.width + _margin;	//get the right edge
 		}
 		//right-to-left
