@@ -31,7 +31,7 @@ package com.thingsiam.loading {
 		{
 			_loadStarted = false;
 			observed.addEventListener( ProgressEvent.PROGRESS, handleProgress, false, 0, true );
-			observed.addEventListener( Event.COMPLETE, handleComplete, false, 0, true );
+			observed.addEventListener( Event.COMPLETE, handleComplete, false, int.MAX_VALUE, true );
 			observed.addEventListener( Event.OPEN, handleStart, false, 0, true );
 		}
 		
@@ -51,7 +51,7 @@ package com.thingsiam.loading {
 		private function handleProgress( e:ProgressEvent ) : void
 		{
 			if( !_loadStarted )
-			{	//in case we're assigned to listen after the fact (or flash doesn't send the start event!)
+			{	//in case we're assigned to listen after the fact (or flash doesn't send the start event! (it doesn't))
 				handleStart(e);
 			}
 			_view.displayProgress(e.bytesLoaded/e.bytesTotal);

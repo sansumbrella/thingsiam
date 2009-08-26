@@ -41,6 +41,7 @@ public class Paginator extends Sprite {
 	
 	public function requestPage( id:int ):void
 	{	//pages are zero-indexed, just like an array
+		dispatchEvent( new PaginationEvent( PaginationEvent.BEFORE_PAGE_CHANGE ));
 		id = constrainPageID(id);
 		if( _pages[id] == _currentPage )
 		{	//already there
@@ -57,6 +58,20 @@ public class Paginator extends Sprite {
 	public function previous():void
 	{
 		requestPage(_currentIndex-1);
+	}
+	
+	public function nextPage():LayoutArray
+	{
+		var id:int = _currentIndex+1;
+		if( id >= _pages.length ){ id = 0; }
+		return _pages[id];
+	}
+	
+	public function previousPage():LayoutArray
+	{
+		var id:int = _currentIndex-1;
+		if( id < 0 ){ id = _pages.length-1; }
+		return _pages[id];
 	}
 	
 	protected function setPage(id:int):void

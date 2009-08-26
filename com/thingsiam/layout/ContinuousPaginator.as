@@ -20,9 +20,9 @@ public class ContinuousPaginator extends Paginator {
 	public static const SCROLL:String = "paginatorScroll";
 	public static const SCROLL_COMPLETE:String = "paginatorScrollComplete";
 	private var _scrollAttraction:Number = 0.18;
-	private var _snapAttraction:Number = 0.09;
+	private var _snapAttraction:Number = 0.12;
 	
-	public function ContinuousPaginator( layout:Class, args:Object)
+	public function ContinuousPaginator(layout:Class, args:Object)
 	{
 		init();
 		super( layout, args);
@@ -44,8 +44,13 @@ public class ContinuousPaginator extends Paginator {
 	
 	private function handlePageResize(e:LayoutEvent):void
 	{
-		trace("pagerow resized");
-		_pageRow.x = _integrator.target = _integrator.value = -_currentPage.x - _currentPage.width/2;
+		if( !_integrator.isChanging )
+		{	//center if locked on a page
+			_pageRow.x = _integrator.target = _integrator.value = -_currentPage.x - _currentPage.width/2;	
+		} else
+		{
+			_integrator.target = -_currentPage.x - _currentPage.width/2;
+		}
 	}
 	
 	private function handleComplete(e:Event):void
@@ -88,8 +93,13 @@ public class ContinuousPaginator extends Paginator {
 		_currentPage = _pages[id];
 		_currentIndex = id;
 		//center on the target page
+		_integrator.addEventListener( Integrator.COMPLETE, handleTurnComplete );
 		_integrator.target = -_currentPage.x - _currentPage.width/2;
-		//handle this event to animate the page change
+	}
+	
+	private function handleTurnComplete(e:Event):void
+	{
+		_integrator.removeEventListener( Integrator.COMPLETE, handleTurnComplete );
 		dispatchEvent( new Event(TURN) );
 	}
 	
@@ -126,7 +136,7 @@ public class ContinuousPaginator extends Paginator {
 				}
 			}
 			
-			setPage(id);
+			requestPage(id);
 		}
 	}
 	

@@ -80,6 +80,9 @@ public class Integrator extends EventDispatcher {
 		{
 			_timer.addEventListener( TimerEvent.TIMER, update );
 			_timer.start();
+		} else
+		{
+			dispatchEvent( new Event(COMPLETE));
 		}
 	}
 	
