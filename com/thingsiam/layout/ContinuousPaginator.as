@@ -2,7 +2,6 @@ package com.thingsiam.layout {
 
 import com.thingsiam.animation.Integrator;
 
-import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.geom.Rectangle;
 
@@ -32,13 +31,21 @@ public class ContinuousPaginator extends Paginator {
 	private function init():void
 	{
 		_integrator = new Integrator(0,0);
+		_integrator.minStep = 1;
 		_integrator.addEventListener( Integrator.UPDATE, handleUpdate, false, 0, true );
 		_integrator.addEventListener( Integrator.COMPLETE, handleComplete, false, 0, true );
 		
 		_pageRow = new RowArray({margin:10});
+		_pageRow.addEventListener( LayoutEvent.RESIZE, handlePageResize );
 		_screen = new Rectangle( 0, 0, 960, 600 );
 		
 		addChild(_pageRow);
+	}
+	
+	private function handlePageResize(e:LayoutEvent):void
+	{
+		trace("pagerow resized");
+		_pageRow.x = _integrator.target = _integrator.value = -_currentPage.x - _currentPage.width/2;
 	}
 	
 	private function handleComplete(e:Event):void
@@ -71,7 +78,6 @@ public class ContinuousPaginator extends Paginator {
 			if( _pages[i] == page )
 			{
 				setPage(i);
-				trace("Continuous Paginator scrolling to: ", i );
 				return;
 			}
 		}
