@@ -50,6 +50,19 @@ public class Paginator extends Sprite {
 		setPage(id);
 	}
 	
+	public function getPageWhere( f:Function ):LayoutArray
+	{
+		for each( var page:LayoutArray in _pages )
+		{
+			if( f(page) )
+			{
+				return page;
+			}	
+		}
+		
+		return currentPage;
+	}
+	
 	public function next():void
 	{
 		requestPage(_currentIndex+1);
@@ -112,13 +125,18 @@ public class Paginator extends Sprite {
 		_layoutType = layout;
 		_layoutParameters = params;
 		
-		_pages.forEach( storeInArray );
-		trace("Layout not changed. Still need to implement the paginator method.");
-	}
-	
-	private function storeInArray( obj:LayoutArray ):void
-	{
+		var allItems:Array = new Array();
+		for each( var page:LayoutArray in _pages )
+		{
+			page.forEach( function(d:DisplayObject){ allItems.push(d); }); 
+		}
+		trace(allItems);
+		dump();
 		
+		for each( var d:DisplayObject in allItems )
+		{
+			push(d);
+		}
 	}
 	
 	//
@@ -168,6 +186,10 @@ public class Paginator extends Sprite {
 	
 	public function get currentPage():LayoutArray{
 		return _currentPage;
+	}
+	
+	public function get layoutType():Class{
+		return _layoutType;
 	}
 	
 	public function itemWidth(index:int):Number{

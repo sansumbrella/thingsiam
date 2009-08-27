@@ -37,11 +37,8 @@ public class GridArray extends LayoutArray {
 	
 	override public function push(item:DisplayObject):Boolean
 	{
-		if( numChildren != 0 )
-		{
-			item.x = _currentColumn * _columnSize + _marginX;
-			item.y = _currentRow * _rowSize + _marginY;
-		}
+		item.x = _currentColumn * _columnSize + _marginX;
+		item.y = _currentRow * _rowSize + _marginY;
 		
 		_currentColumn++;
 		if(_currentColumn == _columns)

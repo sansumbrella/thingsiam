@@ -83,8 +83,9 @@ public class RowArray extends LayoutArray {
 		if( numChildren != 0 )
 		{
 			item.x = right + _margin;
-		} 
+		}
 		else item.x = 0;
+		item.y = 0;
 		
 		return super.push(item);
 	}
