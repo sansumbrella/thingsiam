@@ -1,6 +1,7 @@
 package com.thingsiam.layout {
 
 import com.thingsiam.animation.Integrator;
+import com.thingsiam.math.Numbers;
 
 import flash.events.Event;
 import flash.geom.Rectangle;
@@ -105,8 +106,10 @@ public class ContinuousPaginator extends Paginator {
 	
 	override protected function addPage():void
 	{
+		var pos:Number = value;
 		super.addPage();
 		_pageRow.push(lastPage);
+		setPosition(pos);
 	}
 	
 	override public function dump():void
@@ -117,8 +120,8 @@ public class ContinuousPaginator extends Paginator {
 	
 	public function setPosition( pos:Number, snap:Boolean=false ):void
 	{
-		/*_currentIndex = -1;*/
-		_integrator.target = -pos*(lastPage.x);
+		/*_currentIndex = -1;*/		
+		_integrator.target = Numbers.map(pos, 0, 1, leftX, rightX );
 		_integrator.attraction = _scrollAttraction;
 		
 		if( snap )
@@ -142,12 +145,33 @@ public class ContinuousPaginator extends Paginator {
 	
 	public function get value():Number{
 		//normalized position value
-		return -_integrator.value/(lastPage.x);
+//		return -_integrator.value/(lastPage.x);
+		if(_pages.length == 0)
+		{
+			return 0;
+		}
+//		trace( "ContinuousPaginator: ", _integrator.value, leftX, rightX, Numbers.map( _integrator.value, leftX, rightX, 0, 1));
+		return Numbers.map( _integrator.value, leftX, rightX, 0, 1);
 	}
 	
 	private function get lastPage():LayoutArray
 	{
 		return _pages[_pages.length-1];
+	}
+	
+	private function get firstPage():LayoutArray
+	{
+		return _pages[0];
+	}
+	
+	private function get rightX():Number
+	{
+		return -lastPage.x - lastPage.width/2;
+	}
+	
+	private function get leftX():Number
+	{
+		return -firstPage.x - firstPage.width/2;
 	}
 	
 }

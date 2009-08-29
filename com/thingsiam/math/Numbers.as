@@ -25,6 +25,11 @@ package com.thingsiam.math {
 			return Math.min( $in, $max );
 		}
 		
+		public static function constrain( $in:Number, $min:Number, $max:Number ):Number
+		{	
+			return Math.max( Math.min( $in, $max ), $min );
+		}
+		
 		public static function fillProportionally( object:DisplayObject, rect:Rectangle, centerV:Boolean=true, centerH:Boolean=true ):void
 		{
 			object.width = rect.width;
