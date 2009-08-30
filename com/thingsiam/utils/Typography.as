@@ -14,7 +14,7 @@ package com.thingsiam.utils
 				switch(param.@name.toString())
 				{
 					case "color":
-						style["color"] = tf[param.@name];
+						style["color"] = '#'+tf[param.@name].toString(16);
 					break;
 					case "font":
 						style["fontFamily"] = tf[param.@name];
