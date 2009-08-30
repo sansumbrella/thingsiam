@@ -8,6 +8,7 @@ public class PageModel extends EventDispatcher {
 	protected var 	_states				:Array;
 	protected var 	_currentState		:String;
 	protected var	_fragments			:Array;
+	protected var	_baseChange			:Boolean=true;	//whether the root section changed, or just extra bits
 	public static const INDEX:String = "";								
 	
 	public function PageModel()
@@ -28,8 +29,12 @@ public class PageModel extends EventDispatcher {
 			return;
 		}
 		
+		var base:String = _fragments[0];
 		_currentState = state;
 		_fragments = _currentState.split("/");
+		
+		_baseChange = (_fragments[0] == base) ? false : true;
+		trace("PageModel State Changed", _baseChange, base, _fragments[0] );
 		dispatchEvent( new Event(Event.CHANGE) );
 	}
 	
@@ -45,7 +50,9 @@ public class PageModel extends EventDispatcher {
 	
 	public function getFragment(index:int):String
 	{
-		return _fragments[index];
+		if( _fragments.length > index )
+			return _fragments[index];
+		return "";
 	}
 	
 	public function getFragmentsAfterIndex(index:int):String
@@ -65,6 +72,10 @@ public class PageModel extends EventDispatcher {
 	public function get numFragments():int
 	{
 		return _fragments.length;
+	}
+	
+	public function get baseChange():Boolean{
+		return _baseChange;
 	}
 	
 }

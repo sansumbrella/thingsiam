@@ -81,6 +81,8 @@ public class Page extends PageState {
 		addChildAt( _currentState, _stateDepth );
 		_currentState.addEventListener( SiteEvent.PAGE_SHOWN, handleStateShown, false, 0, true );
 		//this will traverse down through the child hierarchy until a Page is reached that has no states beneath it, or the next PageState isn't a Page
+		trace("Current State: ", _currentState );
+		
 		_currentState.setState(_model.getFragmentsAfterIndex(0));
 		_currentState.show();
 	}
