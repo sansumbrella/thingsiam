@@ -6,6 +6,7 @@ package com.thingsiam.math {
 	*/
 	
 	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	public class Numbers extends Object {
@@ -57,11 +58,30 @@ package com.thingsiam.math {
 					object.height = rect.height;
 					object.scaleX = object.scaleY;
 				}
-				
 			}		
 			
 			if( centerH )	object.x = ((rect.x+rect.width) - object.width)/2;
 			if( centerV )	object.y = ((rect.y+rect.height) - object.height)/2;
+		}
+		
+		//
+		//	@ratio width/height
+		//
+		
+		public static function fitWithRatio( object:DisplayObject, rect:Rectangle, ratio:Number ):void
+		{	//fits an object into a space while preserving an aspect ratio other than the item's current dimensions			
+			//fit height			
+			object.height = rect.height;
+			object.width = rect.height * ratio;
+			
+			if( object.width > rect.width )
+			{	//fit width
+				object.width = rect.width;
+				object.height = object.width/ratio;
+			}			
+			//center
+			object.x = ((rect.x+rect.width) - object.width)/2;
+			object.y = ((rect.y+rect.height) - object.height)/2;
 		}
 		
 	}

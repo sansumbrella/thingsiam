@@ -29,11 +29,13 @@ package com.thingsiam.iterators {
 			return collection[ ++index ];
 		}
 		
-		public function setIndex( id:int ) : Boolean {
+		public function setIndex( id:int ) : Object {
 			if( id < 0 || id >= collection.length ) return false;
 			index = id;
 			return collection[index];
 		}
+		
+		public function getIndex():int{ return index; }
 		
 	}
 	
