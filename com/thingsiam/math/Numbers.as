@@ -11,9 +11,9 @@ package com.thingsiam.math {
 	
 	public class Numbers extends Object {
 				
-		public static function map( $in:Number, $inMin:Number, $inMax:Number, $outMin:Number, $outMax:Number ):Number{			
-			if( $outMin == 0 ) return (normalize($in, $inMin, $inMax )*$outMax);
-			return ( normalize($in, $inMin, $inMax)*( $outMax - $outMin ) + $outMin );
+		public static function map( value:Number, istart:Number, istop:Number, ostart:Number, ostop:Number ):Number{			
+//			taken from processing.org
+			return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 		}
 		
 		public static function normalize( $in:Number, $min:Number, $max:Number ):Number{
