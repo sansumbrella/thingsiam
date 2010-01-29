@@ -12,6 +12,4 @@ Simple data caches
 Iteration
 Vector3D and Number utilities (Vector3D based on Dan Shiffman's)
 
-Oh, something exciting is happening here. A real, bare-bones site framework is being borned. It's managing basic navigation tasks and whatnot and integrating SWFAddress. You'll still probably prefer a mature framework like Gaia for your own needs.
-
 The examples are compiled using the free mxmlc compiler available with the Flex SDK or Flex Builder downloads from Adobe. You may need to edit the path to the mxmlc in the BUILD file to get everything to compile correctly. I found the information available here ( http://www.senocular.com/flash/tutorials/as3withmxmlc/ ) to be quite helpful in getting started using the mxmlc compiler. Alternatively, you should be able to create .fla files in the project root and specify the appropriate example .as file as the Document class and publish with only minor adjustments.
